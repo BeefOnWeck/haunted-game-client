@@ -1,5 +1,6 @@
 import { html, component, useState } from 'haunted';
 import bindToSocket from './socket.js';
+import './components/GameLogin.js';
 
 let socket = null;
 
@@ -34,8 +35,12 @@ function App() {
     socket = bindToSocket(gameState, setGameState);
   }
   
-
   return html`
+    <game-login 
+      .socket=${socket} 
+      @joined=${event => joinedListener(event, gameState, setGameState)}
+    ></game-login>
+
     ${JSON.stringify(gameState)}
 
     <style>
@@ -49,6 +54,18 @@ function App() {
       }
     </style>
   `;
+}
+
+// TODO: Move this to another file (listeners.js?)
+function joinedListener(ev, gameState, setGameState) {
+  if (ev.detail.status == 'You have been added.' || ev.detail.status == 'You have been reconnected.') {
+    setGameState({
+      ...gameState,
+      myName: ev.detail.name,
+      hasJoined: true
+    });
+    window.localStorage.setItem('sgc-name', ev.name);
+  }
 }
 
 customElements.define("my-app", component(App));

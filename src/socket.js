@@ -2,10 +2,14 @@ import { io } from 'socket.io-client';
 
 export default function bindToSocket(gameState, setGameState) {
 
+  // 
   let socket = io(process.env.APP_SERVER_ORIGIN, {
     transports: ['websocket']
   });
 
+  /**
+   * 
+   */
   socket.on('connect', function() {
 
     if (gameState.myName) {
@@ -21,6 +25,9 @@ export default function bindToSocket(gameState, setGameState) {
     });
   });
 
+  /**
+   * 
+   */
   socket.on('it-is-your-turn', (msg) => {
 
     let actionMessage = 'Actions you can take:';
@@ -57,6 +64,9 @@ export default function bindToSocket(gameState, setGameState) {
     });
   });
 
+  /**
+   * 
+   */
   socket.on('game-state', (msg) => {
 
     let stateMessage;
@@ -151,9 +161,9 @@ export default function bindToSocket(gameState, setGameState) {
       myTurn: msg.activePlayer == gameState.myId,
       round: msg.round,
       phase: msg.phase,
-      stateMessage: actionMessage,
-      possibleActions: msg,
-      activePlayerName: activePlayerName,
+      activePlayerName: msg.activePlayerName,
+      stateMessage: stateMessage,
+      possibleActions: msg.possibleActions,
       state: {
         playerResources: msg.state.playerResources,
         rollResult: msg.state.rollResult,
@@ -170,6 +180,7 @@ export default function bindToSocket(gameState, setGameState) {
     
   });
 
+  //
   return socket;
 
 }

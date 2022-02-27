@@ -6668,10 +6668,14 @@ Object.assign(lookup, {
 
 function bindToSocket(gameState, setGameState) {
 
+  // 
   let socket = lookup("http://localhost:3000", {
     transports: ['websocket']
   });
 
+  /**
+   * 
+   */
   socket.on('connect', function() {
 
     if (gameState.myName) {
@@ -6687,6 +6691,9 @@ function bindToSocket(gameState, setGameState) {
     });
   });
 
+  /**
+   * 
+   */
   socket.on('it-is-your-turn', (msg) => {
 
     let actionMessage = 'Actions you can take:';
@@ -6723,12 +6730,20 @@ function bindToSocket(gameState, setGameState) {
     });
   });
 
+  /**
+   * 
+   */
   socket.on('game-state', (msg) => {
+
+    let stateMessage;
     
     if (msg?.phase == 'end') {
-      msg.players
+      const winningPlayer = msg.players
         .filter(ply => ply.id == msg.theWinner)
         .map(ply => ply.name)[0];
+      stateMessage = 'Game Over: Winner is ' + winningPlayer + '.';
+    } else {
+      stateMessage = '';
     }
 
     let centroids = [];
@@ -6812,9 +6827,9 @@ function bindToSocket(gameState, setGameState) {
       myTurn: msg.activePlayer == gameState.myId,
       round: msg.round,
       phase: msg.phase,
-      stateMessage: actionMessage,
-      possibleActions: msg,
-      activePlayerName: activePlayerName,
+      activePlayerName: msg.activePlayerName,
+      stateMessage: stateMessage,
+      possibleActions: msg.possibleActions,
       state: {
         playerResources: msg.state.playerResources,
         rollResult: msg.state.rollResult,
@@ -6831,9 +6846,58 @@ function bindToSocket(gameState, setGameState) {
     
   });
 
+  //
   return socket;
 
 }
+
+function GameLogin({ socket }) {
+
+  const socketLogin = (ev,sock) => {
+    ev.preventDefault();
+
+    const username = ev.target.username.value;
+    const thisComponent = this;
+
+    sock.emit('reconnect-user-name', username, response1 => {
+      if (response1.status == 'Cannot reconnect; no matching user.') {
+        sock.emit('send-user-name', username, response2 => {
+          const custEvnt = new CustomEvent('joined', {
+            bubbles: true,
+            composed: true,
+            detail: {  
+              name: username,
+              status: response2.status
+            }
+          });
+          thisComponent.dispatchEvent(custEvnt);
+        });
+      } else {
+        const custEvnt = new CustomEvent('joined', {
+          bubbles: true,
+          composed: true,
+          detail: {  
+            name: username,
+            status: response1.status
+          }
+        });
+        thisComponent.dispatchEvent(custEvnt);
+      }
+    });
+  };
+
+  return html`
+    <div>
+      <form @submit=${event => socketLogin(event,socket)}>
+        <label for="username">Enter a player name:</label>
+        <input id="username" type="text">
+        <input type="submit" value="Login">
+      </form>
+    </div>
+  `;
+}
+
+customElements.define("game-login", component(GameLogin));
 
 let socket = null;
 
@@ -6868,8 +6932,12 @@ function App() {
     socket = bindToSocket(gameState, setGameState);
   }
   
-
   return html`
+    <game-login 
+      .socket=${socket} 
+      @joined=${event => joinedListener(event, gameState, setGameState)}
+    ></game-login>
+
     ${JSON.stringify(gameState)}
 
     <style>
@@ -6883,6 +6951,18 @@ function App() {
       }
     </style>
   `;
+}
+
+// TODO: Move this to another file (listeners.js?)
+function joinedListener(ev, gameState, setGameState) {
+  if (ev.detail.status == 'You have been added.' || ev.detail.status == 'You have been reconnected.') {
+    setGameState({
+      ...gameState,
+      myName: ev.detail.name,
+      hasJoined: true
+    });
+    window.localStorage.setItem('sgc-name', ev.name);
+  }
 }
 
 customElements.define("my-app", component(App));
