@@ -4,7 +4,7 @@ function StatusBar({ message, resources, roll, phase, activePlayer }) {
 
   return html`
     <div id="resource-list">
-      ${Object.entries(resources).map((value,name) => {
+      ${Object.entries(resources).map(([name,value]) => {
         return html`
           <div class="resource ${name}">
             ${name}: ${value}
