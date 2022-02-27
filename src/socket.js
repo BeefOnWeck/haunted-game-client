@@ -18,11 +18,11 @@ export default function bindToSocket(gameState, setGameState) {
       });
     }
 
-    setGameState({
-      ...gameState,
+    setGameState(prevState => ({
+      ...prevState,
       myId: this.id,
       isConnected: true
-    });
+    }));
   });
 
   /**
@@ -56,12 +56,12 @@ export default function bindToSocket(gameState, setGameState) {
       actionMessage = actionMessage.slice(0,actionMessage.length-1) + '.';
     }
 
-    setGameState({
-      ...gameState,
+    setGameState(prevState => ({
+      ...prevState,
       myTurn: true,
       stateMessage: actionMessage,
       possibleActions: msg
-    });
+    }));
   });
 
   /**
@@ -156,17 +156,17 @@ export default function bindToSocket(gameState, setGameState) {
       });
     });
 
-    setGameState({
-      ...gameState,
+    setGameState(prevState => ({
+      ...prevState,
       myTurn: msg.activePlayer == gameState.myId,
       round: msg.round,
       phase: msg.phase,
       activePlayerName: msg.activePlayerName,
       stateMessage: stateMessage,
       possibleActions: msg.possibleActions,
-      state: {
-        playerResources: msg.state.playerResources,
-        rollResult: msg.state.rollResult,
+      playerResources: msg.state.playerResources,
+      rollResult: msg.state.rollResult,
+      gameBoard: {
         centroids: centroids,
         brigand: brigand,
         nodes: nodes,
@@ -176,7 +176,7 @@ export default function bindToSocket(gameState, setGameState) {
         lines: lines,
         roads: roads,
       }
-    });
+    }));
     
   });
 

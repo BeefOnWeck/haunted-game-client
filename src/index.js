@@ -1,6 +1,8 @@
 import { html, component, useState } from 'haunted';
 import bindToSocket from './socket.js';
+
 import './components/GameLogin.js';
+import './components/StatusBar.js';
 
 let socket = null;
 
@@ -37,9 +39,16 @@ function App() {
   
   return html`
     <game-login 
-      .socket=${socket} 
+      .socket=${socket}
       @joined=${event => joinedListener(event, gameState, setGameState)}
     ></game-login>
+    <status-bar
+      .message=${gameState.stateMessage}
+      .resources=${gameState.playerResources}
+      .roll=${gameState.rollResult}
+      .phase=${gameState.phase}
+      .activePlayer=${gameState.activePlayerName}
+    ></status-bar>
 
     ${JSON.stringify(gameState)}
 
@@ -59,12 +68,12 @@ function App() {
 // TODO: Move this to another file (listeners.js?)
 function joinedListener(ev, gameState, setGameState) {
   if (ev.detail.status == 'You have been added.' || ev.detail.status == 'You have been reconnected.') {
-    setGameState({
-      ...gameState,
+    setGameState(prevState => ({
+      ...prevState,
       myName: ev.detail.name,
       hasJoined: true
-    });
-    window.localStorage.setItem('sgc-name', ev.name);
+    }));
+    window.localStorage.setItem('sgc-name', ev.detail.name);
   }
 }
 

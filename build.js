@@ -6684,11 +6684,11 @@ function bindToSocket(gameState, setGameState) {
       });
     }
 
-    setGameState({
-      ...gameState,
+    setGameState(prevState => ({
+      ...prevState,
       myId: this.id,
       isConnected: true
-    });
+    }));
   });
 
   /**
@@ -6722,12 +6722,12 @@ function bindToSocket(gameState, setGameState) {
       actionMessage = actionMessage.slice(0,actionMessage.length-1) + '.';
     }
 
-    setGameState({
-      ...gameState,
+    setGameState(prevState => ({
+      ...prevState,
       myTurn: true,
       stateMessage: actionMessage,
       possibleActions: msg
-    });
+    }));
   });
 
   /**
@@ -6822,17 +6822,17 @@ function bindToSocket(gameState, setGameState) {
       });
     });
 
-    setGameState({
-      ...gameState,
+    setGameState(prevState => ({
+      ...prevState,
       myTurn: msg.activePlayer == gameState.myId,
       round: msg.round,
       phase: msg.phase,
       activePlayerName: msg.activePlayerName,
       stateMessage: stateMessage,
       possibleActions: msg.possibleActions,
-      state: {
-        playerResources: msg.state.playerResources,
-        rollResult: msg.state.rollResult,
+      playerResources: msg.state.playerResources,
+      rollResult: msg.state.rollResult,
+      gameBoard: {
         centroids: centroids,
         brigand: brigand,
         nodes: nodes,
@@ -6842,7 +6842,7 @@ function bindToSocket(gameState, setGameState) {
         lines: lines,
         roads: roads,
       }
-    });
+    }));
     
   });
 
@@ -6899,6 +6899,31 @@ function GameLogin({ socket }) {
 
 customElements.define("game-login", component(GameLogin));
 
+function StatusBar({ message, resources, roll, phase, activePlayer }) {
+
+  return html`
+    <div id="resource-list">
+      ${Object.entries(resources).map((value,name) => {
+        return html`
+          <div class="resource ${name}">
+            ${name}: ${value}
+          </div>
+        `;
+      })}
+    </div>
+    <!-- <div class="status-fields">
+      <div id="dice-roll">
+        Dice: {{rollResult}}
+      </div>
+      <div id="active-player">
+        Turn: {{activePlayerName}}
+      </div>
+    </div> -->
+  `;
+}
+
+customElements.define("status-bar", component(StatusBar));
+
 let socket = null;
 
 function App() {
@@ -6934,9 +6959,16 @@ function App() {
   
   return html`
     <game-login 
-      .socket=${socket} 
+      .socket=${socket}
       @joined=${event => joinedListener(event, gameState, setGameState)}
     ></game-login>
+    <status-bar
+      .message=${gameState.stateMessage}
+      .resources=${gameState.playerResources}
+      .roll=${gameState.rollResult}
+      .phase=${gameState.phase}
+      .activePlayer=${gameState.activePlayerName}
+    ></status-bar>
 
     ${JSON.stringify(gameState)}
 
@@ -6956,12 +6988,12 @@ function App() {
 // TODO: Move this to another file (listeners.js?)
 function joinedListener(ev, gameState, setGameState) {
   if (ev.detail.status == 'You have been added.' || ev.detail.status == 'You have been reconnected.') {
-    setGameState({
-      ...gameState,
+    setGameState(prevState => ({
+      ...prevState,
       myName: ev.detail.name,
       hasJoined: true
-    });
-    window.localStorage.setItem('sgc-name', ev.name);
+    }));
+    window.localStorage.setItem('sgc-name', ev.detail.name);
   }
 }
 
