@@ -69,6 +69,8 @@ export default function bindToSocket(gameState, setGameState) {
    */
   socket.on('game-state', (msg) => {
 
+    console.log(msg);
+
     let stateMessage;
     
     if (msg?.phase == 'end') {
@@ -79,6 +81,10 @@ export default function bindToSocket(gameState, setGameState) {
     } else {
       stateMessage = '';
     }
+
+    const activePlayerName = msg.players
+      .filter(ply => ply.id == msg.activePlayer)
+      .map(ply => ply.name)[0];
 
     let centroids = [];
     let brigand;
@@ -161,7 +167,7 @@ export default function bindToSocket(gameState, setGameState) {
       myTurn: msg.activePlayer == gameState.myId,
       round: msg.round,
       phase: msg.phase,
-      activePlayerName: msg.activePlayerName,
+      activePlayerName: activePlayerName,
       stateMessage: stateMessage,
       possibleActions: msg.possibleActions,
       playerResources: msg.state.playerResources,

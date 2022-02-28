@@ -1,17 +1,11 @@
 body {
-  background-color: #303f42;
-  color: #a7dbe5;
-  font-family: "Roboto", sans-serif;
-  margin: 0;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-body > h1 {
-  margin-top: 0;
-  background-color: #000;
-  padding: 1em;
-  text-align: center;
-}
 my-app {
-  display: block;
-  padding: 1em;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 10px;
 }
