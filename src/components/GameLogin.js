@@ -35,11 +35,13 @@ function GameLogin({ socket }) {
     });
   };
 
+  const storedName = window.localStorage.getItem('sgc-name') ?? null;
+
   return html`
     <div>
       <form @submit=${event => socketLogin(event,socket)}>
         <label for="username">Enter a player name:</label>
-        <input id="username" type="text">
+        <input id="username" type="text" value=${storedName}>
         <input type="submit" value="Login">
       </form>
     </div>
