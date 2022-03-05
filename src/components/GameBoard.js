@@ -1,9 +1,12 @@
-import { html, component } from 'haunted';
+import { html, component, useState } from 'haunted';
 
 import './StatusBar.js';
 import './HexGrid.js';
 
 function GameBoard({ gameState, socket }) {
+
+  const [selectedRoads, setSelectedRoads] = useState( new Set() );
+  const [selectedNodes, setSelectedNodes] = useState( new Set() );
 
   return html`
     <div id="game-space">
@@ -22,6 +25,10 @@ function GameBoard({ gameState, socket }) {
         .roll=${gameState.rollResult}
         .phase=${gameState.phase}
         .myTurn=${gameState.myTurn}
+        .selectedRoads=${selectedRoads}
+        .setSelectedRoads=${setSelectedRoads}
+        .selectedNodes=${selectedNodes}
+        .setSelectedNodes=${setSelectedNodes}
         .socket=${socket}
       ></hex-grid>
     </div>

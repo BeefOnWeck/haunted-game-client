@@ -1,13 +1,22 @@
-import { html, component, useState } from 'haunted';
-import { svg, css } from 'lit-html';
+import { html, component } from 'haunted';
+import { svg } from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map.js';
 
 import svgJson from './svg.json.js';
 
-function HexGrid({ board, message, action, resources, roll, phase, myTurn, socket}) {
-
-  const [selectedRoads, setSelectedRoads] = useState( new Set() );
-  const [selectedNodes, setSelectedNodes] = useState( new Set() );
+function HexGrid({ 
+  board, 
+  message, 
+  action, 
+  resources, 
+  roll, 
+  phase, 
+  myTurn,
+  selectedRoads,
+  setSelectedRoads,
+  selectedNodes,
+  setSelectedNodes, 
+  socket}) {
 
   const {centroids, nodes, hexagons, numbers, roads, lines, villages, brigand} = board;
 
