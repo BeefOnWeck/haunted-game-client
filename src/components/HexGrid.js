@@ -96,10 +96,35 @@ function HexGrid({
               stroke-width=14
               stroke=${color}
               stroke-opacity=${opacity}
-              @click=${() => selectRoad(idx, setSelectedRoads)}
+              @click=${() => select(idx, setSelectedRoads)}
               class=${classMap({
                 highlightroad: enableBuildHighlight,
                 selectedroad: selectedRoads.has(idx)
+              })}
+            />
+          `;
+        })}
+        <!-- Nodes -->
+        ${nodes.map(({x,y},idx) => {
+          return svg`
+            <circle cx=${x} cy=${y} r="3"/>
+          `;
+        })}
+        <!-- Villages -->
+        ${villages.map(({x,y,color,opacity},idx) => {
+          return svg`
+            <path
+              d=${svgJson['village']}
+              transform="translate(${x-20},${y-25}) scale(2)"
+              stroke=${color}
+              fill=${color}
+              stroke-opacity=${opacity}
+              fill-opacity=${opacity}
+              style="filter:url(#shadow)"
+              @click=${() => select(idx, setSelectedNodes)}
+              class=${classMap({
+                highlightnode: enableBuildHighlight,
+                selectednode : selectedNodes.has(idx)
               })}
             />
           `;
@@ -159,21 +184,19 @@ function HexGrid({
 }
 
 function selectHexagon(index, socket) {
-  console.log(index);
-  // socket.emit('player-actions', {
-  //   'moveBrigand': {
-  //     pid: socket.id,
-  //     hexInd: index
-  //   }
-  // }, response => {
-  //   console.log(response.status);
-  // });
+  socket.emit('player-actions', {
+    'moveBrigand': {
+      pid: socket.id,
+      hexInd: index
+    }
+  }, response => {
+    console.log(response.status);
+  });
 }
 
-function selectRoad(index, setSelectedRoads) {
-  console.log(index);
+function select(index, setSelected) {
   let indexInt = parseInt(index);
-  setSelectedRoads(prevState => {
+  setSelected(prevState => {
     let newState = new Set(prevState);
     if (newState.has(indexInt)) {
       newState.delete(indexInt);
