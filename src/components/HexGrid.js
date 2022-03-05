@@ -87,7 +87,7 @@ function HexGrid({ board, message, action, resources, roll, phase, myTurn, socke
               stroke-width=14
               stroke=${color}
               stroke-opacity=${opacity}
-              @click=${() => selectRoad(idx)}
+              @click=${() => selectRoad(idx, setSelectedRoads)}
               class=${classMap({
                 highlightroad: enableBuildHighlight,
                 selectedroad: selectedRoads.has(idx)
@@ -135,12 +135,12 @@ function HexGrid({ board, message, action, resources, roll, phase, myTurn, socke
         stroke-opacity: 1;
       }
       path.highlightnode:hover {
-        /* fill-opacity: 1;
-        stroke-opacity: 1; */
+        fill-opacity: 1;
+        stroke-opacity: 1;
       }
       path.selectednode {
-        /* fill-opacity: 1;
-        stroke-opacity: 1; */
+        fill-opacity: 1;
+        stroke-opacity: 1;
       }
       polygon.highlightHexagon:hover {
         fill: black;
@@ -161,8 +161,18 @@ function selectHexagon(index, socket) {
   // });
 }
 
-function selectRoad(index) {
+function selectRoad(index, setSelectedRoads) {
   console.log(index);
+  let indexInt = parseInt(index);
+  setSelectedRoads(prevState => {
+    let newState = new Set(prevState);
+    if (newState.has(indexInt)) {
+      newState.delete(indexInt);
+    } else {
+      newState.add(indexInt);
+    }
+    return newState;
+  });
 }
 
 customElements.define("hex-grid", component(HexGrid));
