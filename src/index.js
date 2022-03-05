@@ -47,6 +47,7 @@ function App() {
     html`
       <game-board
         .gameState=${gameState}
+        .socket=${socket}
       ></game-board>
     `;
 

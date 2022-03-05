@@ -3,7 +3,7 @@ import { html, component } from 'haunted';
 import './StatusBar.js';
 import './HexGrid.js';
 
-function GameBoard({ gameState }) {
+function GameBoard({ gameState, socket }) {
 
   return html`
     <div id="game-space">
@@ -22,10 +22,8 @@ function GameBoard({ gameState }) {
         .roll=${gameState.rollResult}
         .phase=${gameState.phase}
         .myTurn=${gameState.myTurn}
+        .socket=${socket}
       ></hex-grid>
-      <!-- <game-controls
-      ></game-controls> -->
-      ${JSON.stringify(gameState)}
     </div>
 
     <style>
