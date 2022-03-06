@@ -2,11 +2,14 @@ import { html, component, useState } from 'haunted';
 
 import './StatusBar.js';
 import './HexGrid.js';
+import './GameControls.js';
 
 function GameBoard({ gameState, socket }) {
 
   const [selectedRoads, setSelectedRoads] = useState( new Set() );
   const [selectedNodes, setSelectedNodes] = useState( new Set() );
+
+  console.log(gameState);
 
   return html`
     <div id="game-space">
@@ -19,11 +22,7 @@ function GameBoard({ gameState, socket }) {
       ></status-bar>
       <hex-grid
         .board=${gameState.gameBoard}
-        .message=${gameState.stateMessage}
         .action=${gameState.possibleActions}
-        .resources=${gameState.playerResources}
-        .roll=${gameState.rollResult}
-        .phase=${gameState.phase}
         .myTurn=${gameState.myTurn}
         .selectedRoads=${selectedRoads}
         .setSelectedRoads=${setSelectedRoads}
@@ -31,6 +30,17 @@ function GameBoard({ gameState, socket }) {
         .setSelectedNodes=${setSelectedNodes}
         .socket=${socket}
       ></hex-grid>
+      <game-controls
+        .message=${gameState.stateMessage}
+        .action=${gameState.possibleActions}
+        .playerResources=${gameState.playerResources}
+        .rollResult=${gameState.rollResult}
+        .gamePhase=${gameState.phase}
+        .selectedRoads=${selectedRoads}
+        .setSelectedRoads=${setSelectedRoads}
+        .selectedNodes=${selectedNodes}
+        .setSelectedNodes=${setSelectedNodes}
+      ></game-controls>
     </div>
 
     <style>

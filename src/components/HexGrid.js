@@ -6,11 +6,7 @@ import svgJson from './svg.json.js';
 
 function HexGrid({ 
   board, 
-  message, 
-  action, 
-  resources, 
-  roll, 
-  phase, 
+  action,
   myTurn,
   selectedRoads,
   setSelectedRoads,
@@ -44,10 +40,9 @@ function HexGrid({
       Math.round(widthY*1.1).toString();
   }
 
-  let enableHexagonHighlight = true;
-  let enableBuildHighlight = true;
+  let enableHexagonHighlight = myTurn && (action.includes('buildStuff') || action.includes('setupVillagesAndRoads'));
+  let enableBuildHighlight = myTurn && action.includes('moveBrigand');
 
-  // TODO: Fill in template string for hexagon grid
   return html`
     <svg viewBox=${svgViewBox}>
       <filter id="shadow">
@@ -107,7 +102,7 @@ function HexGrid({
         <!-- Nodes -->
         ${nodes.map(({x,y},idx) => {
           return svg`
-            <circle cx=${x} cy=${y} r="3"/>
+            <circle cx=${x} cy=${y} r="1"/>
           `;
         })}
         <!-- Villages -->
