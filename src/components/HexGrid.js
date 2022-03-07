@@ -40,8 +40,8 @@ function HexGrid({
       Math.round(widthY*1.1).toString();
   }
 
-  let enableHexagonHighlight = myTurn && (action.includes('buildStuff') || action.includes('setupVillagesAndRoads'));
-  let enableBuildHighlight = myTurn && action.includes('moveBrigand');
+  let enableBuildHighlight = myTurn && (action.includes('buildStuff') || action.includes('setupVillagesAndRoads'));
+  let enableHexagonHighlight = myTurn && action.includes('moveBrigand');
 
   return html`
     <svg viewBox=${svgViewBox}>

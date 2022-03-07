@@ -10,7 +10,8 @@ function GameControls({
   selectedRoads,
   setSelectedRoads,
   selectedNodes,
-  setSelectedNodes}) {
+  setSelectedNodes,
+  socket}) {
 
   const [errorMessage, setErrorMessage] = useState( '' );
 
@@ -29,6 +30,24 @@ function GameControls({
           </div>
         `}
       </div>
+      <button class="action-button" @click=${() => rollDice(socket, setErrorMessage)}>
+        Roll Dice
+      </button>
+      <button 
+        class="action-button" 
+        @click=${() => build(socket, 
+          gamePhase, 
+          selectedRoads, 
+          setSelectedRoads, 
+          selectedNodes, 
+          setSelectedNodes, 
+          setErrorMessage)}
+      >
+        Build Selected
+      </button>
+      <button class="action-button" @click=${() => endturn(socket, setErrorMessage)}>
+        End Turn
+      </button>
     </div>
 
     <style>
@@ -55,8 +74,65 @@ function GameControls({
       .error-message {
         background-color: lightpink;
       }
+      .controls {
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+      .controls > div {
+        font-size: 20px;
+        font-weight: bolder;
+        min-height: 27px;
+        border: thin;
+        border-style: solid;
+      }
+      .action-button {
+        display: inline-block;
+        margin: 5px;
+      }
+      .action-button > input{
+        font-size: larger;
+      }
+      .action-button {
+        font-size: 20px;
+      }
     </style>
   `;
+}
+
+function rollDice(socket, setErrorMessage) {
+  socket.emit('player-actions', {
+    'rollDice': {
+      pid: socket.id
+    }
+  }, response => {
+    setErrorMessage(response.status);
+    setTimeout(msg => setErrorMessage(msg), 3000, '');
+  });
+}
+
+function build(socket, phase, selectedRoads, setSelectedRoads, selectedNodes, setSelectedNodes, setErrorMessage) {
+  let buildAction = phase == 'setup' ? 'setupVillagesAndRoads'
+    : phase == 'play' ? 'buildStuff'
+    : '';
+  socket.emit('player-actions', {
+    [buildAction]: {
+      pid: socket.id,
+      nodes: [...selectedNodes],
+      roads: [...selectedRoads]
+    }
+  }, response => {
+    setErrorMessage(response.status);
+    setTimeout(msg => setErrorMessage(msg), 3000, '');
+  });
+  setSelectedRoads(new Set());
+  setSelectedNodes(new Set());
+}
+
+function endturn(socket, setErrorMessage) {
+  socket.emit('end-my-turn', {}, response => {
+    setErrorMessage(response.status);
+    setTimeout(msg => setErrorMessage(msg), 3000, '');
+  });
 }
 
 customElements.define("game-controls", component(GameControls));

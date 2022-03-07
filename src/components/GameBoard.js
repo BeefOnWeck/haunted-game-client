@@ -40,6 +40,7 @@ function GameBoard({ gameState, socket }) {
         .setSelectedRoads=${setSelectedRoads}
         .selectedNodes=${selectedNodes}
         .setSelectedNodes=${setSelectedNodes}
+        .socket=${socket}
       ></game-controls>
     </div>
 
