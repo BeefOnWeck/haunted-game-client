@@ -1,6 +1,8 @@
 import { html, component, useState } from 'haunted';
 import {classMap} from 'lit-html/directives/class-map.js';
 
+import './TradeDialog.js';
+
 function GameControls({ 
   message,
   action,
@@ -14,6 +16,7 @@ function GameControls({
   socket}) {
 
   const [errorMessage, setErrorMessage] = useState( '' );
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   return html`
     <div id="controls">
@@ -30,6 +33,7 @@ function GameControls({
           </div>
         `}
       </div>
+      <!-- Action buttons -->
       <button class="action-button" @click=${() => rollDice(socket, setErrorMessage)}>
         Roll Dice
       </button>
@@ -45,9 +49,18 @@ function GameControls({
       >
         Build Selected
       </button>
+      <button class="action-button" @click=${() => setDialogOpen(true)}>
+        Trade
+      </button>
       <button class="action-button" @click=${() => endturn(socket, setErrorMessage)}>
         End Turn
       </button>
+      <!-- Trade dialog -->
+      <trade-dialog
+        .open=${dialogOpen}
+        .setOpen=${setDialogOpen}
+      >
+      </trade-dialog>
     </div>
 
     <style>
@@ -74,26 +87,13 @@ function GameControls({
       .error-message {
         background-color: lightpink;
       }
-      .controls {
-        padding-top: 5px;
-        padding-bottom: 5px;
-      }
-      .controls > div {
-        font-size: 20px;
-        font-weight: bolder;
-        min-height: 27px;
-        border: thin;
-        border-style: solid;
-      }
       .action-button {
         display: inline-block;
         margin: 5px;
+        font-size: 20px;
       }
       .action-button > input{
         font-size: larger;
-      }
-      .action-button {
-        font-size: 20px;
       }
     </style>
   `;

@@ -24,3 +24,6 @@ pnpm-debug.log*
 *.sw?
 
 build.js
+bundle.css
+out.txt
+shoelace

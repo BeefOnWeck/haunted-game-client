@@ -1,7 +1,11 @@
+import path from 'path';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import replace from '@rollup/plugin-replace';
+import copy from 'rollup-plugin-copy';
+import css from 'rollup-plugin-css-only';
+// import analyze from 'rollup-plugin-analyzer';
 // import { terser } from "rollup-plugin-terser";
 
 import process from 'process';
@@ -24,11 +28,34 @@ export default {
       browser: true,
     }),
     commonjs(),
-    babel({
-      include: ['**.js', 'node_modules/**'],
-      babelHelpers: 'bundled',
-      presets: ['@babel/preset-env'],
+    // Bundle styles into bundle.css
+    css({
+      output: 'bundle.css' 
     }),
-    // terser()
+    // Copy Shoelace assets to shoelace
+    copy({
+      targets: [
+        {
+          src: path.resolve(__dirname, 'node_modules/@shoelace-style/shoelace/dist/assets'),
+          dest: path.resolve(__dirname, 'shoelace')
+        }
+      ]
+    }),
+    // terser(),
+    // analyze(),
+    // babel({
+    //   include: ['**.js', 'node_modules/**'],
+    //   // babelHelpers: 'bundled',
+    //   presets: ['@babel/preset-env'],
+    //   plugins: ["@babel/plugin-transform-runtime"]
+    // }),
+    // copy({
+    //   targets: [
+    //     {
+    //       src: path.resolve(__dirname, 'node_modules/@shoelace-style/shoelace/dist/assets'),
+    //       dest: path.resolve(__dirname, 'dist/shoelace')
+    //     }
+    //   ]
+    // }),
   ]
 };
