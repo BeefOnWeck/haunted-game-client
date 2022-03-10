@@ -59,6 +59,8 @@ function GameControls({
       <trade-dialog
         .open=${dialogOpen}
         .setOpen=${setDialogOpen}
+        .socket=${socket}
+        .setError=${setErrorMessage}
       >
       </trade-dialog>
     </div>
