@@ -1,5 +1,4 @@
 import { html, component, useState } from 'haunted';
-import {classMap} from 'lit-html/directives/class-map.js';
 
 import '@shoelace-style/shoelace/dist/themes/light.css';
 import '@shoelace-style/shoelace/dist/components/dialog/dialog.js';

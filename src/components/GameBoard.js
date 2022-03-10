@@ -32,9 +32,6 @@ function GameBoard({ gameState, socket }) {
       ></hex-grid>
       <game-controls
         .message=${gameState.stateMessage}
-        .action=${gameState.possibleActions}
-        .playerResources=${gameState.playerResources}
-        .rollResult=${gameState.rollResult}
         .gamePhase=${gameState.phase}
         .selectedRoads=${selectedRoads}
         .setSelectedRoads=${setSelectedRoads}

@@ -5,9 +5,6 @@ import './TradeDialog.js';
 
 function GameControls({ 
   message,
-  action,
-  playerResources,
-  rollResult,
   gamePhase,
   selectedRoads,
   setSelectedRoads,
