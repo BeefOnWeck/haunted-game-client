@@ -152,10 +152,12 @@ function HexGrid({
       .centroid {
         fill: white;
         stroke: black;
+        pointer-events: none;
       }
       .number {
         font-weight: bold;
         font-size: 24px;
+        pointer-events: none;
       }
       path.highlightroad:hover {
         stroke-opacity: 1;
