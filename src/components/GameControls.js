@@ -15,6 +15,7 @@ function GameControls({
   const [errorMessage, setErrorMessage] = useState( '' );
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  // TODO: Add a third message type for when it is someone else's turn
   return html`
     <div id="controls">
       <!-- Message bar -->

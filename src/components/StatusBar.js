@@ -1,8 +1,13 @@
 import { html, component } from 'haunted';
 
+import './DiceRoll.js';
+
 function StatusBar({ message, resources, roll, phase, activePlayer }) {
 
   return html`
+    <dice-roll>
+      .roll=${roll}
+    </dice-roll>
     <div id="resource-list">
       ${Object.entries(resources).map(([name,value]) => {
         return html`
@@ -12,16 +17,11 @@ function StatusBar({ message, resources, roll, phase, activePlayer }) {
         `;
       })}
     </div>
-    <div class="status-fields">
-      <div id="dice-roll">
-        Dice: ${roll}
-      </div>
-      <div id="active-player">
-        Turn: ${activePlayer}
-      </div>
-    </div>
 
     <style>
+      #resource-list {
+        display: inline-block;
+      }
       .resource {
         display: inline-block;
         margin: 3px;
@@ -48,23 +48,6 @@ function StatusBar({ message, resources, roll, phase, activePlayer }) {
       }
       .fiber {
         background-color: rgb(232, 232, 238);
-      }
-      .status-fields {
-        background: #cccfea;
-        margin-top: 10px;
-        border: thin;
-        border-style: solid;
-      }
-      .status-fields > div {
-        font-size: 20px;
-        font-weight: bolder;
-        display: inline-block;
-      }
-      #dice-roll {
-        margin-right: 20px;
-      }
-      #active-player {
-        margin-left: 20px;
       }
     </style>
   `;
