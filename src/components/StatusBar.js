@@ -5,9 +5,9 @@ import './DiceRoll.js';
 function StatusBar({ message, resources, roll, phase, activePlayer }) {
 
   return html`
-    <dice-roll>
+    <dice-roll 
       .roll=${roll}
-    </dice-roll>
+    ></dice-roll>
     <div id="resource-list">
       ${Object.entries(resources).map(([name,value]) => {
         return html`
