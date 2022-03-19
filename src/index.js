@@ -20,7 +20,7 @@ function App() {
     possibleActions: [],
     stateMessage: 'Waiting for game to start...',
     playerResources: {},
-    rollResult: 0,
+    rollResult: [0,0],
     gameBoard: {
       centroids: [],
       nodes: [],

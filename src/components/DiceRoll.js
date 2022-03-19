@@ -9,14 +9,14 @@ function DiceRoll({ roll }) {
     <sl-animation name="rollIn" easing="linear" duration="1000" iterations="1" play>
       <div class="dice-roll">
         <svg id="die1" viewBox="0 0 100 100">
-          ${diceSvg(roll)}
+          ${diceSvg(roll[0])}
         </svg>
       </div>
     </sl-animation>
     <sl-animation name="rollIn" easing="linear" duration="1000" iterations="1" play>
       <div class="dice-roll">
         <svg id="die2" viewBox="0 0 100 100">
-          ${diceSvg(roll)}
+          ${diceSvg(roll[1])}
         </svg>
       </div>
     </sl-animation>
