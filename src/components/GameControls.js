@@ -78,8 +78,6 @@ function GameControls({
         font-size: 20px;
         font-weight: bolder;
         min-height: 27px;
-        border: thin;
-        border-style: solid;
       }
       .status-message {
         background-color: lightgreen;

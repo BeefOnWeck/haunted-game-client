@@ -63,6 +63,11 @@ function ResourceBadges({ block, timber, fiber, cereal, rock }) {
         border-radius: 5px;
         font-size: 3vw;
       }
+      @media screen and (min-width: 800px) {
+        .resource {
+          font-size: 24px;
+        }
+      }
       .block {
         background-color: #a56666;
         color: whitesmoke;
