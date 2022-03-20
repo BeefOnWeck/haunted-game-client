@@ -45,8 +45,8 @@ function HexGrid({
 
   return html`
     <svg viewBox=${svgViewBox}>
-      <filter id="shadow">
-        <feDropShadow dx="0.5" dy="1.0" stdDeviation="0.5"/>
+      <filter id="shadow" filterUnits="userSpaceOnUse">
+        <feDropShadow dx="0.5" dy="0.5" stdDeviation="0.5"/>
       </filter>
       <g>
         <!-- Hexagons -->

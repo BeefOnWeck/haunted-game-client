@@ -30,7 +30,7 @@ function DiceRoll({ roll1, roll2 }) {
     <style>
       div.dice-roll {
         display: inline-block;
-        vertical-align: bottom;
+        vertical-align: middle;
         margin-right: 5px;
         width: 5%;
       }

@@ -52,6 +52,7 @@ function ResourceBadges({ block, timber, fiber, cereal, rock }) {
     <style>
       #resource-list {
         display: inline-block;
+        vertical-align: middle;
       }
       .resource {
         display: inline-block;
@@ -60,7 +61,7 @@ function ResourceBadges({ block, timber, fiber, cereal, rock }) {
         border: black;
         font-weight: bolder;
         border-radius: 5px;
-        font-size: 20px;
+        font-size: 3vw;
       }
       .block {
         background-color: #a56666;

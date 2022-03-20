@@ -17,6 +17,12 @@ function StatusBar({ message, resources, roll, phase, activePlayer }) {
       .cereal=${resources['cereal']}
       .rock=${resources['rock']}
     ></resource-badges>
+
+    <style>
+      dice-roll {
+        margin-right: 25px;
+      }
+    </style>
   `;
 }
 
