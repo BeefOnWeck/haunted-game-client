@@ -8,7 +8,6 @@ function DiceRoll({ roll1, roll2 }) {
   const [rolling, setRolling] = useState(false);
 
   useEffect(() => {
-    console.log('rolling');
     setRolling(true);
   },[roll1,roll2]);
 
