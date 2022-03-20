@@ -1,22 +1,29 @@
-import { html, component } from 'haunted';
+import { html, component, useState, useEffect } from 'haunted';
 import { svg } from 'lit-html';
 
 import '@shoelace-style/shoelace/dist/components/animation/animation.js';
 
-function DiceRoll({ roll }) {
+function DiceRoll({ roll1, roll2 }) {
+
+  const [rolling, setRolling] = useState(false);
+
+  useEffect(() => {
+    console.log('rolling');
+    setRolling(true);
+  },[roll1,roll2]);
 
   return html`
-    <sl-animation name="rollIn" easing="linear" duration="1000" iterations="1" play>
+    <sl-animation name="rollIn" easing="linear" duration="1000" iterations="1" ?play=${rolling} @sl-finish=${() => setRolling(false)}>
       <div class="dice-roll">
         <svg id="die1" viewBox="0 0 100 100">
-          ${diceSvg(roll[0])}
+          ${diceSvg(roll1)}
         </svg>
       </div>
     </sl-animation>
-    <sl-animation name="rollIn" easing="linear" duration="1000" iterations="1" play>
+    <sl-animation name="rollIn" easing="linear" duration="1000" iterations="1" ?play=${rolling} @sl-finish=${() => setRolling(false)}>
       <div class="dice-roll">
         <svg id="die2" viewBox="0 0 100 100">
-          ${diceSvg(roll[1])}
+          ${diceSvg(roll2)}
         </svg>
       </div>
     </sl-animation>

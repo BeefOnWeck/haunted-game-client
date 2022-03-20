@@ -9,8 +9,6 @@ function GameBoard({ gameState, socket }) {
   const [selectedRoads, setSelectedRoads] = useState( new Set() );
   const [selectedNodes, setSelectedNodes] = useState( new Set() );
 
-  console.log(gameState);
-
   return html`
     <div id="game-space">
       <status-bar

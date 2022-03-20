@@ -6,7 +6,8 @@ function StatusBar({ message, resources, roll, phase, activePlayer }) {
 
   return html`
     <dice-roll 
-      .roll=${roll}
+      .roll1=${roll[0]}
+      .roll2=${roll[1]}
     ></dice-roll>
     <div id="resource-list">
       ${Object.entries(resources).map(([name,value]) => {

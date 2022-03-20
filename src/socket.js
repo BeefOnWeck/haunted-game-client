@@ -69,8 +69,6 @@ export default function bindToSocket(gameState, setGameState) {
    */
   socket.on('game-state', (msg) => {
 
-    console.log(msg);
-
     let stateMessage;
     
     if (msg?.phase == 'end') {
