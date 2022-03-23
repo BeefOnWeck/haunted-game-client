@@ -1,9 +1,12 @@
-import { html, component } from 'haunted';
+import { html, component, useState } from 'haunted';
 
 import './DiceRoll.js';
-import './ResourceBadges.js'
+import './ResourceBadges.js';
+import './HelpDialog.js';
 
 function StatusBar({ message, resources, roll, phase, activePlayer }) {
+
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   return html`
     <dice-roll 
@@ -17,6 +20,12 @@ function StatusBar({ message, resources, roll, phase, activePlayer }) {
       .cereal=${resources['cereal']}
       .rock=${resources['rock']}
     ></resource-badges>
+    <help-dialog
+      .open=${dialogOpen}
+      .setOpen=${setDialogOpen}
+      .resources=${resources}
+      .activePlayer=${activePlayer}
+    ></help-dialog>
 
     <style>
       dice-roll {
