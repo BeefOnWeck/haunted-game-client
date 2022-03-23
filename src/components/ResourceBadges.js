@@ -15,19 +15,19 @@ function ResourceBadges({ block, timber, fiber, cereal, rock }) {
   },[block]);
 
   useEffect(() => {
-    setTimeout(() => setTimberBounce(true), 1150);
+    setTimeout(() => setTimberBounce(true), 1200);
   },[timber]);
 
   useEffect(() => {
-    setTimeout(() => setFiberBounce(true), 1300);
+    setTimeout(() => setFiberBounce(true), 1400);
   },[fiber]);
 
   useEffect(() => {
-    setTimeout(() => setCerealBounce(true), 1450);
+    setTimeout(() => setCerealBounce(true), 1600);
   },[cereal]);
 
   useEffect(() => {
-    setTimeout(() => setRockBounce(true), 1600);
+    setTimeout(() => setRockBounce(true), 1800);
   },[rock]);
 
   return html`

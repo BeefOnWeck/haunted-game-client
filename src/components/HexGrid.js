@@ -1,4 +1,4 @@
-import { html, component } from 'haunted';
+import { html, component, useState, useEffect } from 'haunted';
 import { svg } from 'lit-html';
 import {classMap} from 'lit-html/directives/class-map.js';
 
@@ -15,6 +15,13 @@ function HexGrid({
   socket}) {
 
   const {centroids, nodes, hexagons, numbers, roads, lines, villages, brigand} = board;
+
+  const [moving, setMoving] = useState(false);
+
+  useEffect(() => {
+    setMoving(true);
+    setTimeout(() => setMoving(false), 2000);
+  },[brigand.x,brigand.y]);
 
   let svgViewBox = "0 0 100 100";
   if (nodes.length > 0) {
@@ -77,11 +84,13 @@ function HexGrid({
         })}
         <!-- Brigand -->
         ${svg`
+        <g class=${moving ? 'movingAnimation' : ''}>
           <path 
+            id="brigand"
             d=${svgJson['brigand']} 
-            transform="scale(0.15) rotate(180) translate(${-1.0*brigand.x/0.15-280},${-1.0*brigand.y/0.15-320})" 
-            style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
+            transform="scale(0.15) rotate(180) translate(${-1.0*brigand.x/0.15-280},${-1.0*brigand.y/0.15-320})"
           />
+        </g>
         `}
         <!-- Roads -->
         ${roads.map(({path,color,opacity},idx) => {
@@ -175,6 +184,29 @@ function HexGrid({
       }
       polygon.highlightHexagon:hover {
         fill: black;
+      }
+      @keyframes fadeInFromAbove {
+        0% {
+          transform: translateY(-10%);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .movingAnimation {
+        animation-duration: 1.5s;
+        animation-timing-function: ease-out;
+        animation-delay: 0s;
+        animation-iteration-count: 1;
+        animation-name: fadeInFromAbove;
+      }
+      #brigand {
+        fill:#231f20;
+        fill-opacity:1;
+        fill-rule:nonzero;
+        stroke:none
       }
     </style>
   `;
