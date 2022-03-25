@@ -19,6 +19,22 @@ function HelpDialog({open,setOpen,resources,activePlayer}){
       ?open=${open}
       @sl-after-hide=${() => setOpen(false)}
     >
+      <div>
+        Your name: 
+      </div>
+      <div id="active-player">
+        Active player: ${activePlayer}
+      </div>
+      <div id="resource-list-long">
+        ${Object.entries(resources).map(([name,value]) => {
+          return html`
+            <div class="resource ${name}">
+              ${name}: ${value}
+            </div>
+          `;
+        })}
+      </div>
+
       <sl-button slot="footer" variant="neutral" @click=${() => setOpen(false)}>
         Close
       </sl-button>
@@ -31,6 +47,35 @@ function HelpDialog({open,setOpen,resources,activePlayer}){
       #help-button > sl-icon {
         font-size: 32px;
         margin-top: 3px;
+      }
+      sl-dialog > div {
+        width: fit-content;
+      }
+      .resource {
+        margin: 3px;
+        padding: 5px;
+        border: black;
+        font-weight: bolder;
+        border-radius: 5px;
+        font-size: 20px;
+      }
+      .block {
+        background-color: #a56666;
+        color: whitesmoke;
+      }
+      .rock {
+        background-color: #8d8c8c;
+        color: whitesmoke;
+      }
+      .timber {
+        background-color:#618961;
+        color: whitesmoke;
+      }
+      .cereal {
+        background-color: rgb(230, 192, 97);
+      }
+      .fiber {
+        background-color: rgb(232, 232, 238);
       }
     </style>
   `;
