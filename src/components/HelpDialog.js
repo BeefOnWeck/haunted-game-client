@@ -11,8 +11,8 @@ setBasePath('.');
 function HelpDialog({open,setOpen,resources,activePlayer}){
 
   return html`
-    <sl-button variant="default" size="medium" circle @click=${() => setOpen(true)}>
-      <sl-icon name="question-lg" label="Information"></sl-icon>
+    <sl-button id="help-button" variant="default" size="medium" circle @click=${() => setOpen(true)}>
+      <sl-icon name="patch-question" label="Information"></sl-icon>
     </sl-button>
     <sl-dialog 
       label="Information"
@@ -23,6 +23,16 @@ function HelpDialog({open,setOpen,resources,activePlayer}){
         Close
       </sl-button>
     </sl-dialog>
+
+    <style>
+      #help-button {
+        margin-left: 25px;
+      }
+      #help-button > sl-icon {
+        font-size: 32px;
+        margin-top: 3px;
+      }
+    </style>
   `;
 }
 

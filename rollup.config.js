@@ -37,7 +37,7 @@ export default {
       targets: [
         {
           src: path.resolve(__dirname, 'node_modules/@shoelace-style/shoelace/dist/assets'),
-          dest: path.resolve(__dirname, 'shoelace')
+          dest: path.resolve(__dirname, '.')
         }
       ]
     }),
