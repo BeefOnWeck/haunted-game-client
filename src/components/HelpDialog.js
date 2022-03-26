@@ -15,24 +15,35 @@ function HelpDialog({open,setOpen,resources,activePlayer}){
       <sl-icon name="patch-question" label="Information"></sl-icon>
     </sl-button>
     <sl-dialog 
-      label="Information"
+      label="Welcome to Hexagon Island!"
       ?open=${open}
       @sl-after-hide=${() => setOpen(false)}
     >
       <div>
-        Your name: 
+        ⬡ Your name: 
       </div>
-      <div id="active-player">
-        Active player: ${activePlayer}
+      <div>
+        ⬡ Active player: ${activePlayer}
       </div>
-      <div id="resource-list-long">
-        ${Object.entries(resources).map(([name,value]) => {
-          return html`
-            <div class="resource ${name}">
-              ${name}: ${value}
-            </div>
-          `;
-        })}
+      <div>
+        ⬡ Longest road: 
+      </div>
+      <div>
+        ⬡ Most ninjas: 
+      </div>
+      <div>
+        <div id="your-resources">
+          ⬡ Your resources:
+        </div>
+        <div id="resource-list-long">
+          ${Object.entries(resources).map(([name,value]) => {
+            return html`
+              <div class="resource ${name}">
+                ${name}: ${value}
+              </div>
+            `;
+          })}
+        </div>
       </div>
 
       <sl-button slot="footer" variant="neutral" @click=${() => setOpen(false)}>
@@ -50,6 +61,11 @@ function HelpDialog({open,setOpen,resources,activePlayer}){
       }
       sl-dialog > div {
         width: fit-content;
+        display: flex;
+        margin-bottom: 10px;
+      }
+      #your-resources {
+        text-align: left;
       }
       .resource {
         margin: 3px;
@@ -57,7 +73,9 @@ function HelpDialog({open,setOpen,resources,activePlayer}){
         border: black;
         font-weight: bolder;
         border-radius: 5px;
-        font-size: 20px;
+        font-size: 16px;
+        width: fit-content;
+        display: inline-block;
       }
       .block {
         background-color: #a56666;
