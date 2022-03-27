@@ -8,7 +8,7 @@ import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.j
 
 setBasePath('.');
 
-function HelpDialog({open,setOpen,myName, resources,activePlayer}){
+function HelpDialog({open,setOpen,myName,resources,activePlayer}){
 
   return html`
     <sl-button id="help-button" variant="default" size="medium" circle @click=${() => setOpen(true)}>

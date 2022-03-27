@@ -1,6 +1,8 @@
 import { html, component, useState } from 'haunted';
 import {classMap} from 'lit-html/directives/class-map.js';
 
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+
 import './TradeDialog.js';
 
 function GameControls({ 
@@ -32,11 +34,12 @@ function GameControls({
         `}
       </div>
       <!-- Action buttons -->
-      <button class="action-button" @click=${() => rollDice(socket, setErrorMessage)}>
+      <sl-button class="action-button" size="small" @click=${() => rollDice(socket, setErrorMessage)}>
         Roll Dice
-      </button>
-      <button 
+      </sl-button>
+      <sl-button 
         class="action-button" 
+        size="small" 
         @click=${() => build(socket, 
           gamePhase, 
           selectedRoads, 
@@ -46,13 +49,13 @@ function GameControls({
           setErrorMessage)}
       >
         Build Selected
-      </button>
-      <button class="action-button" @click=${() => setDialogOpen(true)}>
+      </sl-button>
+      <sl-button class="action-button" size="small" @click=${() => setDialogOpen(true)}>
         Trade
-      </button>
-      <button class="action-button" @click=${() => endturn(socket, setErrorMessage)}>
+      </sl-button>
+      <sl-button class="action-button" size="small" @click=${() => endturn(socket, setErrorMessage)}>
         End Turn
-      </button>
+      </sl-button>
       <!-- Trade dialog -->
       <trade-dialog
         .open=${dialogOpen}
@@ -85,13 +88,12 @@ function GameControls({
       .error-message {
         background-color: lightpink;
       }
-      .action-button {
-        display: inline-block;
+      sl-button.action-button::part(base) {
         margin: 5px;
-        font-size: 20px;
       }
-      .action-button > input{
-        font-size: larger;
+      sl-button.action-button::part(label) {
+        font-size: large;
+        font-weight: bold;
       }
     </style>
   `;
