@@ -8,7 +8,7 @@ import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.j
 
 setBasePath('.');
 
-function HelpDialog({open,setOpen,resources,activePlayer}){
+function HelpDialog({open,setOpen,myName, resources,activePlayer}){
 
   return html`
     <sl-button id="help-button" variant="default" size="medium" circle @click=${() => setOpen(true)}>
@@ -19,32 +19,23 @@ function HelpDialog({open,setOpen,resources,activePlayer}){
       ?open=${open}
       @sl-after-hide=${() => setOpen(false)}
     >
-      <div>
-        ⬡ Your name: 
-      </div>
-      <div>
-        ⬡ Active player: ${activePlayer}
-      </div>
-      <div>
-        ⬡ Longest road: 
-      </div>
-      <div>
-        ⬡ Most ninjas: 
-      </div>
-      <div>
-        <div id="your-resources">
-          ⬡ Your resources:
-        </div>
-        <div id="resource-list-long">
-          ${Object.entries(resources).map(([name,value]) => {
-            return html`
-              <div class="resource ${name}">
-                ${name}: ${value}
-              </div>
-            `;
-          })}
-        </div>
-      </div>
+      <ul>
+        <li>Your name: ${myName} </li>
+        <li>Active player: ${activePlayer} </li>
+        <li>Longest road: </li>
+        <li>Most ninjas: </li>
+        <li>Your resources:
+          <div id="resource-list-long">
+            ${Object.entries(resources).map(([name,value]) => {
+              return html`
+                <div class="resource ${name}">
+                  ${name}: ${value}
+                </div>
+              `;
+            })}
+          </div>
+        </li>
+      </ul>
 
       <sl-button slot="footer" variant="neutral" @click=${() => setOpen(false)}>
         Close
@@ -63,6 +54,22 @@ function HelpDialog({open,setOpen,resources,activePlayer}){
         width: fit-content;
         display: flex;
         margin-bottom: 10px;
+      }
+      ul {
+        position: relative;
+        list-style: none;
+        margin-left: 0;
+        padding-left: 1.75em;
+      }
+      ul li:before {
+        content: "⬡";
+        position: absolute;
+        left: 5px;
+        font-weight: bolder;
+      }
+      ul > li {
+        text-align: left;
+        padding-top: 3px;
       }
       #your-resources {
         text-align: left;

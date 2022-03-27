@@ -4,7 +4,7 @@ import './DiceRoll.js';
 import './ResourceBadges.js';
 import './HelpDialog.js';
 
-function StatusBar({ message, resources, roll, phase, activePlayer }) {
+function StatusBar({ myName, resources, roll, activePlayer }) {
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -23,6 +23,7 @@ function StatusBar({ message, resources, roll, phase, activePlayer }) {
     <help-dialog
       .open=${dialogOpen}
       .setOpen=${setDialogOpen}
+      .myName=${myName}
       .resources=${resources}
       .activePlayer=${activePlayer}
     ></help-dialog>

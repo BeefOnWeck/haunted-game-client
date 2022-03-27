@@ -12,10 +12,9 @@ function GameBoard({ gameState, socket }) {
   return html`
     <div id="game-space">
       <status-bar
-        .message=${gameState.stateMessage}
+        .myName=${gameState.myName}
         .resources=${gameState.playerResources}
         .roll=${gameState.rollResult}
-        .phase=${gameState.phase}
         .activePlayer=${gameState.activePlayerName}
       ></status-bar>
       <hex-grid
