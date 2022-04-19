@@ -70,11 +70,12 @@ export default function bindToSocket(gameState, setGameState) {
   socket.on('game-state', (msg) => {
 
     let stateMessage;
-    
-    if (msg?.phase == 'end') {
-      const winningPlayer = msg.players
+
+    const winningPlayer = msg.players
         .filter(ply => ply.id == msg.theWinner)
         .map(ply => ply.name)[0];
+    
+    if (msg?.phase == 'end') {
       stateMessage = 'Game Over: Winner is ' + winningPlayer + '.';
     } else {
       stateMessage = '';
@@ -160,6 +161,12 @@ export default function bindToSocket(gameState, setGameState) {
       });
     });
 
+    const hasTheLongestRoad = msg.players
+        .filter(ply => ply.id == msg.longestRoad)
+        .map(ply => ply.name)[0];
+
+    console.log(msg);
+
     setGameState(prevState => ({
       ...prevState,
       myTurn: msg.activePlayer == gameState.myId,
@@ -170,6 +177,8 @@ export default function bindToSocket(gameState, setGameState) {
       possibleActions: msg.possibleActions,
       playerResources: msg.state.playerResources,
       rollResult: msg.state.rollResult,
+      theWinner: winningPlayer,
+      longestRoad: hasTheLongestRoad,
       gameBoard: {
         centroids: centroids,
         brigand: brigand,

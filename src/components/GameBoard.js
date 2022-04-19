@@ -16,6 +16,8 @@ function GameBoard({ gameState, socket }) {
         .resources=${gameState.playerResources}
         .roll=${gameState.rollResult}
         .activePlayer=${gameState.activePlayerName}
+        .theWinner=${gameState.theWinner}
+        .longestRoad=${gameState.longestRoad}
       ></status-bar>
       <hex-grid
         .board=${gameState.gameBoard}

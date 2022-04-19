@@ -21,6 +21,8 @@ function App() {
     stateMessage: 'Waiting for game to start...',
     playerResources: {},
     rollResult: [0,0],
+    theWinner: null,
+    longestRoad: null,
     gameBoard: {
       centroids: [],
       nodes: [],

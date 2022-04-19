@@ -8,10 +8,10 @@ import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.j
 
 setBasePath('.');
 
-function HelpDialog({open,setOpen,myName,resources,activePlayer}){
+function HelpDialog({open,setOpen,myName,resources,activePlayer,theWinner,longestRoad}){
 
   return html`
-    <sl-button id="help-button" variant="default" size="medium" circle @click=${() => setOpen(true)}>
+    <sl-button id="help-button" variant="default" size="large" circle @click=${() => setOpen(true)}>
       <sl-icon name="patch-question" label="Information"></sl-icon>
     </sl-button>
     <sl-dialog 
@@ -22,7 +22,8 @@ function HelpDialog({open,setOpen,myName,resources,activePlayer}){
       <ul>
         <li>Your name: ${myName} </li>
         <li>Active player: ${activePlayer} </li>
-        <li>Longest road: </li>
+        <li>The winner: ${theWinner}</li>
+        <li>Longest road: ${longestRoad}</li>
         <li>Most ninjas: </li>
         <li>Your resources:
           <div id="resource-list-long">
@@ -47,8 +48,8 @@ function HelpDialog({open,setOpen,myName,resources,activePlayer}){
         margin-left: 25px;
       }
       #help-button > sl-icon {
-        font-size: 32px;
-        margin-top: 3px;
+        font-size: 44px;
+        margin-top: 2px;
       }
       sl-dialog > div {
         width: fit-content;
