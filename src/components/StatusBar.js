@@ -2,6 +2,7 @@ import { html, component, useState } from 'haunted';
 
 import './DiceRoll.js';
 import './ResourceBadges.js';
+import './LongestRoad.js';
 import './HelpDialog.js';
 
 function StatusBar({ myName, resources, roll, activePlayer, theWinner, longestRoad }) {
@@ -20,6 +21,9 @@ function StatusBar({ myName, resources, roll, activePlayer, theWinner, longestRo
       .cereal=${resources['cereal']}
       .rock=${resources['rock']}
     ></resource-badges>
+    <longest-road
+      .longestRoad=${longestRoad}
+    ></longest-road>
     <help-dialog
       .open=${dialogOpen}
       .setOpen=${setDialogOpen}
