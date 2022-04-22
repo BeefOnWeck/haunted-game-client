@@ -165,6 +165,8 @@ export default function bindToSocket(gameState, setGameState) {
         .filter(ply => ply.id == msg.longestRoad)
         .map(ply => ply.name)[0];
 
+    // TODO: Also find the color of the player with the longest road
+
     console.log(msg);
 
     setGameState(prevState => ({
