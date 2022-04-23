@@ -161,11 +161,13 @@ export default function bindToSocket(gameState, setGameState) {
       });
     });
 
-    const hasTheLongestRoad = msg.players
-        .filter(ply => ply.id == msg.longestRoad)
-        .map(ply => ply.name)[0];
+    const longestRoadOwner = msg.players
+      .filter(ply => ply.id == msg.longestRoad)
+      .map(ply => ply.name)[0];
 
-    // TODO: Also find the color of the player with the longest road
+    const longestRoadColor = msg.players
+      .filter(ply => ply.id == msg.longestRoad)
+      .map(ply => ply.color)[0];
 
     console.log(msg);
 
@@ -180,7 +182,8 @@ export default function bindToSocket(gameState, setGameState) {
       playerResources: msg.state.playerResources,
       rollResult: msg.state.rollResult,
       theWinner: winningPlayer,
-      longestRoad: hasTheLongestRoad,
+      longestRoadOwner: longestRoadOwner,
+      longestRoadColor: longestRoadColor ?? 'lightgray',
       gameBoard: {
         centroids: centroids,
         brigand: brigand,

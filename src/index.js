@@ -22,7 +22,8 @@ function App() {
     playerResources: {},
     rollResult: [0,0],
     theWinner: null,
-    longestRoad: null,
+    longestRoadOwner: null,
+    longestRoadColor: 'lightgray',
     gameBoard: {
       centroids: [],
       nodes: [],
