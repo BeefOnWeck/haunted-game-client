@@ -14,14 +14,14 @@ function HexGrid({
   setSelectedNodes, 
   socket}) {
 
-  const {centroids, nodes, hexagons, numbers, roads, lines, villages, brigand} = board;
+  const {centroids, nodes, hexagons, numbers, roads, lines, villages, scorpion} = board;
 
   const [moving, setMoving] = useState(false);
 
   useEffect(() => {
     setMoving(true);
     setTimeout(() => setMoving(false), 2000);
-  },[brigand.x,brigand.y]);
+  },[scorpion.x,scorpion.y]);
 
   let svgViewBox = "0 0 100 100";
   if (nodes.length > 0) {
@@ -48,7 +48,7 @@ function HexGrid({
   }
 
   let enableBuildHighlight = myTurn && (action.includes('buildStuff') || action.includes('setupVillagesAndRoads'));
-  let enableHexagonHighlight = myTurn && action.includes('moveBrigand');
+  let enableHexagonHighlight = myTurn && action.includes('moveScorpion');
 
   return html`
     <svg viewBox=${svgViewBox}>
@@ -82,13 +82,13 @@ function HexGrid({
             <path d=${line} class="outlines"/>
           `;
         })}
-        <!-- Brigand -->
+        <!-- scorpion -->
         ${svg`
         <g class=${moving ? 'movingAnimation' : ''}>
           <path 
-            id="brigand"
-            d=${svgJson['brigand']} 
-            transform="scale(0.15) rotate(180) translate(${-1.0*brigand.x/0.15-280},${-1.0*brigand.y/0.15-320})"
+            id="scorpion"
+            d=${svgJson['scorpion']} 
+            transform="scale(0.15) rotate(180) translate(${-1.0*scorpion.x/0.15-280},${-1.0*scorpion.y/0.15-320})"
           />
         </g>
         `}
@@ -202,7 +202,7 @@ function HexGrid({
         animation-iteration-count: 1;
         animation-name: fadeInFromAbove;
       }
-      #brigand {
+      #scorpion {
         fill:#231f20;
         fill-opacity:1;
         fill-rule:nonzero;
@@ -214,7 +214,7 @@ function HexGrid({
 
 function selectHexagon(index, socket) {
   socket.emit('player-actions', {
-    'moveBrigand': {
+    'moveScorpion': {
       pid: socket.id,
       hexInd: index
     }

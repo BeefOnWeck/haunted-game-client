@@ -38,8 +38,8 @@ export default function bindToSocket(gameState, setGameState) {
     if (msg.includes('rollDice')) {
       actionMessage = 'Roll the dice.';
     } 
-    if (msg.includes('moveBrigand')) {
-      actionMessage = 'Move the brigand.';
+    if (msg.includes('moveScorpion')) {
+      actionMessage = 'Move the scorpion.';
     }
     if (msg.includes('buildStuff')) {
       actionMessage += ' Build,';
@@ -86,15 +86,15 @@ export default function bindToSocket(gameState, setGameState) {
       .map(ply => ply.name)[0];
 
     let centroids = [];
-    let brigand;
+    let scorpion;
 
-    // Update the grid centroids and brigand location
+    // Update the grid centroids and scorpion location
     // NOTE: Centroids typically do not change once the game starts
     msg.state.centroids.forEach((cent,idx) => {
       // TODO: Only do this once on the first state message
       centroids.splice(idx,1,cent);
-      if (idx == msg.state.brigandIndex) {
-        brigand = {...cent};
+      if (idx == msg.state.scorpionIndex) {
+        scorpion = {...cent};
       }
     });
 
@@ -186,7 +186,7 @@ export default function bindToSocket(gameState, setGameState) {
       longestRoadColor: longestRoadColor ?? 'lightgray',
       gameBoard: {
         centroids: centroids,
-        brigand: brigand,
+        scorpion: scorpion,
         nodes: nodes,
         villages: villages,
         hexagons: hexagons,

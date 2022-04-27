@@ -32,7 +32,7 @@ function App() {
       roads: [],
       lines: [],
       villages: [],
-      brigand: {}
+      scorpion: {}
     }
   });
 
