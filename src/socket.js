@@ -169,7 +169,7 @@ export default function bindToSocket(gameState, setGameState) {
       .filter(ply => ply.id == msg.longestRoad)
       .map(ply => ply.color)[0];
 
-    console.log(msg);
+    console.log('message: ', msg.state.bugs);
 
     setGameState(prevState => ({
       ...prevState,
@@ -184,6 +184,7 @@ export default function bindToSocket(gameState, setGameState) {
       theWinner: winningPlayer,
       longestRoadOwner: longestRoadOwner,
       longestRoadColor: longestRoadColor ?? 'lightgray',
+      yourBugs: msg.state.bugs,
       gameBoard: {
         centroids: centroids,
         scorpion: scorpion,

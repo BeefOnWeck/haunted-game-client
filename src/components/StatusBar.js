@@ -6,7 +6,7 @@ import './MostBugs.js';
 import './LongestRoad.js';
 import './HelpDialog.js';
 
-function StatusBar({ myName, resources, roll, activePlayer, theWinner, longestRoadOwner, longestRoadColor }) {
+function StatusBar({ myName, resources, roll, activePlayer, theWinner, yourBugs, longestRoadOwner, longestRoadColor }) {
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -23,7 +23,8 @@ function StatusBar({ myName, resources, roll, activePlayer, theWinner, longestRo
       .rock=${resources['rock']}
     ></resource-badges>
     <most-bugs
-      .most-bugs=${null}
+      .mostBugs=${null}
+      .yourBugs=${yourBugs}
     ></most-bugs>
     <longest-road
       .longestRoadOwner=${longestRoadOwner}

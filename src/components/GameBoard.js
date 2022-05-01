@@ -17,6 +17,7 @@ function GameBoard({ gameState, socket }) {
         .roll=${gameState.rollResult}
         .activePlayer=${gameState.activePlayerName}
         .theWinner=${gameState.theWinner}
+        .yourBugs=${gameState.yourBugs}
         .longestRoadOwner=${gameState.longestRoadOwner}
         .longestRoadColor=${gameState.longestRoadColor}
       ></status-bar>

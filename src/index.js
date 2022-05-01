@@ -24,6 +24,7 @@ function App() {
     theWinner: null,
     longestRoadOwner: null,
     longestRoadColor: 'lightgray',
+    yourBugs: null,
     gameBoard: {
       centroids: [],
       nodes: [],

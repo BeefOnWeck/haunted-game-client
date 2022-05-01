@@ -34,7 +34,11 @@ function GameControls({
         `}
       </div>
       <!-- Action buttons -->
-      <sl-button class="action-button" size="small" @click=${() => rollDice(socket, setErrorMessage)}>
+      <sl-button 
+        class="action-button" 
+        size="small" 
+        @click=${() => rollDice(socket, setErrorMessage)}
+      >
         Roll Dice
       </sl-button>
       <sl-button 
@@ -50,10 +54,25 @@ function GameControls({
       >
         Build Selected
       </sl-button>
-      <sl-button class="action-button" size="small" @click=${() => setDialogOpen(true)}>
+      <sl-button 
+        class="action-button" 
+        size="small" 
+        @click=${() => setDialogOpen(true)}
+      >
         Trade
       </sl-button>
-      <sl-button class="action-button" size="small" @click=${() => endturn(socket, setErrorMessage)}>
+      <sl-button 
+        class="action-button" 
+        size="small" 
+        @click=${() => buyBug(socket, setErrorMessage)}
+      >
+        Buy Bug
+      </sl-button>
+      <sl-button 
+        class="action-button" 
+        size="small" 
+        @click=${() => endturn(socket, setErrorMessage)}
+      >
         End Turn
       </sl-button>
       <!-- Trade dialog -->
@@ -126,6 +145,17 @@ function build(socket, phase, selectedRoads, setSelectedRoads, selectedNodes, se
   });
   setSelectedRoads(new Set());
   setSelectedNodes(new Set());
+}
+
+function buyBug(socket, setErrorMessage) {
+  socket.emit('player-actions', {
+    'buyBug': {
+      pid: socket.id
+    }
+  }, response => {
+    setErrorMessage(response.status);
+    setTimeout(msg => setErrorMessage(msg), 3000, '');
+  });
 }
 
 function endturn(socket, setErrorMessage) {
