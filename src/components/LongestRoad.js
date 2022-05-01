@@ -6,7 +6,7 @@ import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.j
 
 setBasePath('.');
 
-function LongestRoad({longestRoadOwner,longestRoadColor}){
+function LongestRoad({longestRoadColor}){
 
   const colorString = 'color:' + longestRoadColor;
 

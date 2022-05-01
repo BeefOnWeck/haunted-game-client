@@ -7,14 +7,14 @@ import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.j
 
 setBasePath('.');
 
-function MostBugs({mostBugs, yourBugs}){
+function MostBugs({mostBugsColor, yourBugs}){
 
-  console.log('most bugs: ', yourBugs);
+  const colorString = 'color:' + mostBugsColor;
 
   // TODO: Add a badge with the color of the player with the longest road
   return html`
     <div id="most-bugs-badge">
-      <sl-icon name="bug-fill" label="Longest Road" style="color:lightgray">
+      <sl-icon name="bug-fill" label="Longest Road" style=${colorString}>
       </sl-icon>
       <sl-badge pill>${yourBugs}</sl-badge>
     </div>

@@ -169,7 +169,13 @@ export default function bindToSocket(gameState, setGameState) {
       .filter(ply => ply.id == msg.longestRoad)
       .map(ply => ply.color)[0];
 
-    console.log('message: ', msg.state.bugs);
+    const mostBugsOwner = msg.players
+      .filter(ply => ply.id == msg.mostBugs)
+      .map(ply => ply.name)[0];
+
+    const mostBugsColor = msg.players
+      .filter(ply => ply.id == msg.mostBugs)
+      .map(ply => ply.color)[0];
 
     setGameState(prevState => ({
       ...prevState,
@@ -184,6 +190,8 @@ export default function bindToSocket(gameState, setGameState) {
       theWinner: winningPlayer,
       longestRoadOwner: longestRoadOwner,
       longestRoadColor: longestRoadColor ?? 'lightgray',
+      mostBugsOwner: mostBugsOwner,
+      mostBugsColor: mostBugsColor ?? 'lightgray',
       yourBugs: msg.state.bugs,
       gameBoard: {
         centroids: centroids,

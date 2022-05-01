@@ -20,6 +20,8 @@ function GameBoard({ gameState, socket }) {
         .yourBugs=${gameState.yourBugs}
         .longestRoadOwner=${gameState.longestRoadOwner}
         .longestRoadColor=${gameState.longestRoadColor}
+        .mostBugsOwner=${gameState.mostBugsOwner}
+        .mostBugsColor=${gameState.mostBugsColor}
       ></status-bar>
       <hex-grid
         .board=${gameState.gameBoard}
