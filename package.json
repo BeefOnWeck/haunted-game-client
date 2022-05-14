@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "rollup ./src/index.js  --watch --config"
+    "watch": "rollup ./src/index.js  --watch --config",
+    "build": "rollup ./src/index.js --config"
   },
   "keywords": [
     "lit",
