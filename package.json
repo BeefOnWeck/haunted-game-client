@@ -1,6 +1,6 @@
 {
   "name": "haunted-game-client",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A simple JS game client written using lit-html and haunted.",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "lit",
     "haunted"
   ],
-  "author": "David Winters",
+  "author": "BeefOnWeck",
   "license": "MIT",
   "dependencies": {
     "@shoelace-style/shoelace": "*",
