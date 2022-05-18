@@ -45,7 +45,7 @@ function HelpDialog({open,setOpen,myName,resources,activePlayer,theWinner,longes
 
     <style>
       #help-button {
-        margin-left: 25px;
+        margin-left: 2vw;
       }
       #help-button > sl-icon {
         font-size: 44px;

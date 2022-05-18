@@ -51,7 +51,17 @@ function StatusBar({
 
     <style>
       dice-roll {
-        margin-right: 25px;
+        margin-right: 2vw;
+      }
+      help-dialog {
+        margin-left: 3vw;
+      }
+      @media screen and (max-width: 400px) {
+        help-dialog {
+          position: absolute;
+          top: 19vw;
+          right: 7vw;
+        }
       }
     </style>
   `;

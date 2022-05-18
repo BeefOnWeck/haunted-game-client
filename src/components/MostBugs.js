@@ -22,11 +22,11 @@ function MostBugs({mostBugsColor, yourBugs}){
     <style>
       #most-bugs-badge {
         display: inline-block;
-        margin-left: 30px;
+        margin-left: 3vw;
         vertical-align: middle;
       }
       #most-bugs-badge > sl-icon {
-        font-size: 38px;
+        font-size: 5vw;
         border: solid;
         border-radius: 10px;
         border-width: medium;
@@ -46,8 +46,8 @@ function MostBugs({mostBugsColor, yourBugs}){
         height: 20px;
         z-index: 1;
         position: relative;
-        top: -40px;
-        left: -13px;
+        top: -5vw;
+        left: -2vw;
         background-color: white;
         border: solid 1px black;
         font-weight: bolder;

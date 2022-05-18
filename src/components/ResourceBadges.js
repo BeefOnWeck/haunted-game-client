@@ -80,7 +80,7 @@ function ResourceBadges({ block, timber, fiber, cereal, rock }) {
       }
       .resource {
         display: inline-block;
-        margin: 3px;
+        margin: 0.25vw;
         padding: 5px 10px 5px 10px;
         border: black;
         font-weight: bolder;
