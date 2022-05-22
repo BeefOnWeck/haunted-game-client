@@ -47,6 +47,7 @@ function StatusBar({
       .activePlayer=${activePlayer}
       .theWinner=${theWinner}
       .longestRoadOwner=${longestRoadOwner}
+      .mostBugsOwner=${mostBugsOwner}
     ></help-dialog>
 
     <style>

@@ -23,7 +23,7 @@ function LongestRoad({longestRoadColor}){
         vertical-align: middle;
       }
       #longest-road-badge > sl-icon {
-        font-size: 5vw;
+        font-size: 4vw;
         border: solid;
         border-radius: 10px;
         border-width: medium;

@@ -8,7 +8,7 @@ import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.j
 
 setBasePath('.');
 
-function HelpDialog({open,setOpen,myName,resources,activePlayer,theWinner,longestRoadOwner}){
+function HelpDialog({open,setOpen,myName,resources,activePlayer,theWinner,longestRoadOwner,mostBugsOwner}){
 
   return html`
     <sl-button id="help-button" variant="default" size="large" circle @click=${() => setOpen(true)}>
@@ -24,7 +24,7 @@ function HelpDialog({open,setOpen,myName,resources,activePlayer,theWinner,longes
         <li>Active player: ${activePlayer} </li>
         <li>The winner: ${theWinner}</li>
         <li>Longest road: ${longestRoadOwner}</li>
-        <li>Most ninjas: </li>
+        <li>Most bugs: ${mostBugsOwner} </li>
         <li>Your resources:
           <div id="resource-list-long">
             ${Object.entries(resources).map(([name,value]) => {

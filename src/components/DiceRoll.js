@@ -31,7 +31,7 @@ function DiceRoll({ roll1, roll2 }) {
       div.dice-roll {
         display: inline-block;
         vertical-align: middle;
-        margin-right: 2vw;
+        margin-right: 1vw;
         width: 5%;
       }
       div.dice-roll > svg {

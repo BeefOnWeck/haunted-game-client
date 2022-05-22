@@ -26,7 +26,7 @@ function MostBugs({mostBugsColor, yourBugs}){
         vertical-align: middle;
       }
       #most-bugs-badge > sl-icon {
-        font-size: 5vw;
+        font-size: 4vw;
         border: solid;
         border-radius: 10px;
         border-width: medium;
