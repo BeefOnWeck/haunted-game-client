@@ -46,8 +46,8 @@ function MostBugs({mostBugsColor, yourBugs}){
         height: 20px;
         z-index: 1;
         position: relative;
-        top: -5vw;
-        left: -2vw;
+        top: -4vw;
+        left: -1vw;
         background-color: white;
         border: solid 1px black;
         font-weight: bolder;
