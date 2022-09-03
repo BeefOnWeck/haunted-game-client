@@ -30,6 +30,21 @@ export default function bindToSocket(gameState, setGameState) {
     // }));
   });
 
+  socket.addEventListener('message', function(event){
+
+    let data = JSON.parse(event.data);
+
+    setGameState(prevState => {
+      return {
+        ...prevState,
+        hasJoined: true,
+        myId: data.key,
+        ...data.board
+      };
+    });
+
+  });
+
   /**
    * 
    */

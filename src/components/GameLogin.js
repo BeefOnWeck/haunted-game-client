@@ -8,31 +8,33 @@ function GameLogin({ socket }) {
     const username = ev.target.username.value;
     const thisComponent = this;
 
-    sock.emit('reconnect-user-name', username, response1 => {
-      if (response1.status == 'Cannot reconnect; no matching user.') {
-        sock.emit('send-user-name', username, response2 => {
-          const custEvnt = new CustomEvent('joined', {
-            bubbles: true,
-            composed: true,
-            detail: {  
-              name: username,
-              status: response2.status
-            }
-          });
-          thisComponent.dispatchEvent(custEvnt);
-        });
-      } else {
-        const custEvnt = new CustomEvent('joined', {
-          bubbles: true,
-          composed: true,
-          detail: {  
-            name: username,
-            status: response1.status
-          }
-        });
-        thisComponent.dispatchEvent(custEvnt);
-      }
-    });
+    sock.send(username);
+
+    // sock.emit('reconnect-user-name', username, response1 => {
+    //   if (response1.status == 'Cannot reconnect; no matching user.') {
+    //     sock.emit('send-user-name', username, response2 => {
+    //       const custEvnt = new CustomEvent('joined', {
+    //         bubbles: true,
+    //         composed: true,
+    //         detail: {  
+    //           name: username,
+    //           status: response2.status
+    //         }
+    //       });
+    //       thisComponent.dispatchEvent(custEvnt);
+    //     });
+    //   } else {
+    //     const custEvnt = new CustomEvent('joined', {
+    //       bubbles: true,
+    //       composed: true,
+    //       detail: {  
+    //         name: username,
+    //         status: response1.status
+    //       }
+    //     });
+    //     thisComponent.dispatchEvent(custEvnt);
+    //   }
+    // });
   };
 
   const storedName = window.localStorage.getItem('sgc-name') ?? null;
