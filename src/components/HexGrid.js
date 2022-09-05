@@ -21,7 +21,9 @@ function HexGrid({
   useEffect(() => {
     setMoving(true);
     setTimeout(() => setMoving(false), 2000);
-  },[scorpion.x,scorpion.y]);
+  },[scorpion?.x,scorpion?.y]);
+
+  console.log(scorpion);
 
   let svgViewBox = "0 0 100 100";
   if (nodes.length > 0) {
@@ -68,7 +70,7 @@ function HexGrid({
           `;
         })}
         <!-- Numbers -->
-        ${centroids.map(({x,y,number},idx) => {
+        ${centroids.map(({loc:{x, y}, number}, idx) => {
           return svg`
             <circle cx=${x} cy=${y} r="21" class="centroid"/>
             <text x=${x} y=${y} dy="0.35em" text-anchor="middle" class="number">
@@ -137,22 +139,22 @@ function HexGrid({
     </svg>
 
     <style>
-      .block {
+      .Block {
         fill: #a56666;
       }
-      .rock {
+      .Rock {
         fill: #8d8c8c;
       }
-      .timber {
+      .Timber {
         fill:#618961;
       }
-      .cereal {
+      .Cereal {
         fill: rgb(201, 174, 108);
       }
-      .fiber {
+      .Fiber {
         fill: rgb(232, 232, 238);
       }
-      .desert {
+      .Desert {
         fill: rgb(175, 171, 108);
       }
       .outlines{

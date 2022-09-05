@@ -35,7 +35,7 @@ function App() {
       roads: [],
       lines: [],
       villages: [],
-      scorpion: {}
+      scorpion: {x: null, y: null}
     }
   });
 

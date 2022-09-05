@@ -14,9 +14,6 @@ export default function bindToSocket(gameState, setGameState) {
    */
   socket.addEventListener('open', function(event) {
 
-    console.log(this);
-    console.log(event);
-
     // if (gameState.myName) {
     //   socket.emit('reconnect-user-name', gameState.myName, response => {
     //     console.log(response.status);
@@ -34,14 +31,85 @@ export default function bindToSocket(gameState, setGameState) {
 
     let data = JSON.parse(event.data);
 
-    setGameState(prevState => {
-      return {
-        ...prevState,
-        hasJoined: true,
-        myId: data.key,
-        ...data.board
-      };
+    let centroids = [];
+    let scorpion = {x: null, y: null};
+
+    data.board.centroids.forEach((cent,idx) => {
+      centroids.splice(idx,1,cent);
+      if (idx == data.board.scorpion_index) {
+        scorpion = {...cent.loc};
+      }
     });
+
+    let nodes = [];
+    let villages = [];
+
+    data.board.nodes.forEach((node,idx) => {
+      // TODO: Only do this once on the first state message
+      nodes.splice(idx,1,node.loc);
+      const color = node.player_key ? data.colors[node.player_key] : null;
+      villages.push({
+        x: node.loc.x,
+        y: node.loc.y,
+        color: color, // No player --> null color --> village not visible
+        opacity: color ? 1.0 : 0.0
+      });
+    });
+
+    let hexagons = [];
+    let numbers = [];
+
+    data.board.hexagons.forEach((hex,idx) => {
+      // SVG polygon defining a hexagon
+      let poly = hex.vertices.reduce((acc, cv, ci) => {
+        return ci<5 ? acc + `${cv.x},${cv.y}, ` : acc + `${cv.x},${cv.y}`;
+      }, '');
+      // TODO: Only do this once on first game status message
+      hexagons.splice(idx,1,{
+        poly: poly,
+        resource: hex.resource
+      });
+      numbers.splice(idx,1,hex.number);
+    });
+
+    let lines = [];
+    let roads = [];
+
+    // Update the roads
+    data.board.roads.forEach((road,idx) => {
+      // Define SVG lines for all potential roads
+      let node1 = data.board.nodes[road.inds[0]].loc;
+      let node2 = data.board.nodes[road.inds[1]].loc;
+      let path = `M ${node1.x} ${node1.y} L ${node2.x} ${node2.y}`;
+      lines.splice(idx,1,path);
+      // Define SVG for built roads
+      const color = road.player_key ? data.colors[road.player_key] : 'black';
+      roads.splice(idx,1,{
+        path: path,
+        color: color,
+        opacity: color!='black' ? 1.0 : 0.0 // TODO: Consider `color ? 1.0 : 0.0`
+      });
+    });
+
+
+    setGameState(prevState => ({
+      ...prevState,
+      hasJoined: true,
+      isConnected: true,
+      round: data.round,
+      phase: data.phase,
+      myId: data.key,
+      gameBoard: {
+        centroids: centroids,
+        scorpion: scorpion,
+        nodes: nodes,
+        villages: villages,
+        hexagons: hexagons,
+        numbers: numbers,
+        lines: lines,
+        roads: roads,
+      }
+    }));
 
   });
 
