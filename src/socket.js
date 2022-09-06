@@ -31,6 +31,17 @@ export default function bindToSocket(gameState, setGameState) {
 
     let data = JSON.parse(event.data);
 
+    const winningPlayer = data?.the_winner?.name;
+
+    let stateMessage;
+    if (data?.phase == 'End') {
+      stateMessage = 'Game Over: Winner is ' + winningPlayer + '.';
+    } else {
+      stateMessage = '';
+    }
+
+    const activePlayerName = data?.active_player?.name;
+
     let centroids = [];
     let scorpion = {x: null, y: null};
 
@@ -99,6 +110,9 @@ export default function bindToSocket(gameState, setGameState) {
       round: data.round,
       phase: data.phase,
       myId: data.key,
+      stateMessage: stateMessage,
+      rollResult: data?.rollResult ?? [0,0],
+      activePlayerName: activePlayerName,
       gameBoard: {
         centroids: centroids,
         scorpion: scorpion,
@@ -267,20 +281,20 @@ export default function bindToSocket(gameState, setGameState) {
 
   //   setGameState(prevState => ({
   //     ...prevState,
-  //     myTurn: msg.activePlayer == gameState.myId,
+  //     myTurn: msg.activePlayer == gameState.myId, // 
   //     round: msg.round,
   //     phase: msg.phase,
-  //     activePlayerName: activePlayerName,
-  //     stateMessage: stateMessage,
-  //     possibleActions: msg.possibleActions,
+  //     activePlayerName: activePlayerName, // 
+  //     stateMessage: stateMessage, // TODO
+  //     possibleActions: msg.possibleActions, // TODO
   //     playerResources: msg.state.playerResources,
-  //     rollResult: msg.state.rollResult,
-  //     theWinner: winningPlayer,
-  //     longestRoadOwner: longestRoadOwner,
-  //     longestRoadColor: longestRoadColor ?? 'lightgray',
-  //     mostBugsOwner: mostBugsOwner,
-  //     mostBugsColor: mostBugsColor ?? 'lightgray',
-  //     yourBugs: msg.state.bugs,
+  //     rollResult: msg.state.rollResult, // 
+  //     theWinner: winningPlayer, // 
+  //     longestRoadOwner: longestRoadOwner, // TODO
+  //     longestRoadColor: longestRoadColor ?? 'lightgray', // TODO
+  //     mostBugsOwner: mostBugsOwner, // TODO
+  //     mostBugsColor: mostBugsColor ?? 'lightgray', // TODO
+  //     yourBugs: msg.state.bugs, // TODO
   //     gameBoard: {
   //       centroids: centroids,
   //       scorpion: scorpion,
