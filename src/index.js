@@ -39,8 +39,10 @@ function App() {
     }
   });
 
+  const [errorMessage, setErrorMessage] = useState( '' );
+
   if (socket == null) {
-    socket = bindToSocket(gameState, setGameState);
+    socket = bindToSocket(gameState, setGameState, setErrorMessage);
   }
   
   return gameState.hasJoined == false ? 
@@ -53,6 +55,7 @@ function App() {
     html`
       <game-board
         .gameState=${gameState}
+        .errorMessage=${errorMessage}
         .socket=${socket}
       ></game-board>
     `;

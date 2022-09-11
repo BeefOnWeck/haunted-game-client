@@ -7,14 +7,15 @@ import './TradeDialog.js';
 
 function GameControls({ 
   message,
+  errorMessage,
   gamePhase,
   selectedRoads,
   setSelectedRoads,
   selectedNodes,
   setSelectedNodes,
+  key,
   socket}) {
 
-  const [errorMessage, setErrorMessage] = useState( '' );
   const [dialogOpen, setDialogOpen] = useState(false);
 
   // TODO: Add a third message type for when it is someone else's turn
@@ -37,7 +38,7 @@ function GameControls({
       <sl-button 
         class="action-button" 
         size="small" 
-        @click=${() => rollDice(socket, setErrorMessage)}
+        @click=${() => rollDice(socket, key)}
       >
         Roll Dice
       </sl-button>
@@ -45,12 +46,12 @@ function GameControls({
         class="action-button" 
         size="small" 
         @click=${() => build(socket, 
+          key,
           gamePhase, 
           selectedRoads, 
           setSelectedRoads, 
           selectedNodes, 
-          setSelectedNodes, 
-          setErrorMessage)}
+          setSelectedNodes)}
       >
         Build Selected
       </sl-button>
@@ -64,14 +65,14 @@ function GameControls({
       <sl-button 
         class="action-button" 
         size="small" 
-        @click=${() => buyBug(socket, setErrorMessage)}
+        @click=${() => buyBug(socket, key)}
       >
         Buy Bug
       </sl-button>
       <sl-button 
         class="action-button" 
         size="small" 
-        @click=${() => endturn(socket, setErrorMessage)}
+        @click=${() => endturn(socket, key)}
       >
         End Turn
       </sl-button>
@@ -80,7 +81,6 @@ function GameControls({
         .open=${dialogOpen}
         .setOpen=${setDialogOpen}
         .socket=${socket}
-        .setError=${setErrorMessage}
       >
       </trade-dialog>
     </div>
@@ -118,36 +118,36 @@ function GameControls({
   `;
 }
 
-function rollDice(socket, setErrorMessage) {
-  socket.emit('player-actions', {
-    'rollDice': {
-      pid: socket.id
-    }
-  }, response => {
-    setErrorMessage(response.status);
-    setTimeout(msg => setErrorMessage(msg), 3000, '');
-  });
+function rollDice(socket, key) {
+  socket.send(JSON.stringify({
+    action: 'RollDice',
+    player: key,
+    target: 'None',
+    trade: 'None'
+  }));
 }
 
-function build(socket, phase, selectedRoads, setSelectedRoads, selectedNodes, setSelectedNodes, setErrorMessage) {
-  let buildAction = phase == 'setup' ? 'setupVillagesAndRoads'
-    : phase == 'play' ? 'buildStuff'
+function build(socket, key, phase, selectedRoads, setSelectedRoads, 
+  selectedNodes, setSelectedNodes) {
+  let buildAction = phase == 'Setup' ? 'PlaceVillageAndRoad'
+    : phase == 'Play' ? 'BuildStuff'
     : '';
-  socket.emit('player-actions', {
-    [buildAction]: {
-      pid: socket.id,
-      nodes: [...selectedNodes],
-      roads: [...selectedRoads]
-    }
-  }, response => {
-    setErrorMessage(response.status);
-    setTimeout(msg => setErrorMessage(msg), 3000, '');
-  });
+  console.log([...selectedRoads].map(r=>r));
+  console.log([...selectedNodes].map(n=>n));
+  socket.send(JSON.stringify({
+    action: buildAction,
+    player: key,
+    target: [
+      [...selectedRoads].map(r => ({0:'Road',1:r})),
+      [...selectedNodes].map(n => ({0:'Node',1:n}))
+    ],
+    trade: 'None'
+  }));
   setSelectedRoads(new Set());
   setSelectedNodes(new Set());
 }
 
-function buyBug(socket, setErrorMessage) {
+function buyBug(socket) {
   socket.emit('player-actions', {
     'buyBug': {
       pid: socket.id
@@ -158,7 +158,7 @@ function buyBug(socket, setErrorMessage) {
   });
 }
 
-function endturn(socket, setErrorMessage) {
+function endturn(socket) {
   socket.emit('end-my-turn', {}, response => {
     setErrorMessage(response.status);
     setTimeout(msg => setErrorMessage(msg), 3000, '');

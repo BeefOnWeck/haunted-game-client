@@ -4,7 +4,7 @@ import './StatusBar.js';
 import './HexGrid.js';
 import './GameControls.js';
 
-function GameBoard({ gameState, socket }) {
+function GameBoard({ gameState, errorMessage, socket }) {
 
   const [selectedRoads, setSelectedRoads] = useState( new Set() );
   const [selectedNodes, setSelectedNodes] = useState( new Set() );
@@ -35,11 +35,13 @@ function GameBoard({ gameState, socket }) {
       ></hex-grid>
       <game-controls
         .message=${gameState.stateMessage}
+        .errorMessage=${errorMessage}
         .gamePhase=${gameState.phase}
         .selectedRoads=${selectedRoads}
         .setSelectedRoads=${setSelectedRoads}
         .selectedNodes=${selectedNodes}
         .setSelectedNodes=${setSelectedNodes}
+        .key=${gameState.myId}
         .socket=${socket}
       ></game-controls>
     </div>

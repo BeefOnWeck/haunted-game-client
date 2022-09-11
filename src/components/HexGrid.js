@@ -23,8 +23,6 @@ function HexGrid({
     setTimeout(() => setMoving(false), 2000);
   },[scorpion?.x,scorpion?.y]);
 
-  console.log(scorpion);
-
   let svgViewBox = "0 0 100 100";
   if (nodes.length > 0) {
     let nodeBounds = nodes.reduce((acc, cv) => {
