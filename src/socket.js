@@ -33,6 +33,7 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
 
     if (message.error) {
 
+      console.log(message.error);
       setErrorMessage(message.error);
       setTimeout(msg => setErrorMessage(msg), 3000, '');
 

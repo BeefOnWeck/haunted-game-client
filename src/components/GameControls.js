@@ -132,17 +132,18 @@ function build(socket, key, phase, selectedRoads, setSelectedRoads,
   let buildAction = phase == 'Setup' ? 'PlaceVillageAndRoad'
     : phase == 'Play' ? 'BuildStuff'
     : '';
-  console.log([...selectedRoads].map(r=>r));
-  console.log([...selectedNodes].map(n=>n));
-  socket.send(JSON.stringify({
+  let target = [
+    [...selectedRoads].map(r => (['Road',r])),
+    [...selectedNodes].map(n => (['Node',n]))
+  ].flat();
+  while (target.length < 5) target.push(null);
+  let command = {
     action: buildAction,
     player: key,
-    target: [
-      [...selectedRoads].map(r => ({0:'Road',1:r})),
-      [...selectedNodes].map(n => ({0:'Node',1:n}))
-    ],
-    trade: 'None'
-  }));
+    target,
+    trade: null
+  };
+  socket.send(JSON.stringify(command));
   setSelectedRoads(new Set());
   setSelectedNodes(new Set());
 }
