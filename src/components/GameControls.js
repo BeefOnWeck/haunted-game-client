@@ -153,6 +153,15 @@ function build(socket, key, phase, selectedRoads, setSelectedRoads, selectedNode
 
   setSelectedRoads(new Set());
   setSelectedNodes(new Set());
+
+  if (phase == 'Setup') {
+    socket.send(JSON.stringify({
+      action: 'EndTurn',
+      player: key,
+      target: [null,null,null,null,null],
+      trade: null
+    }));
+  }
 }
 
 function buyBug(socket, key) {

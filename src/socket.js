@@ -40,6 +40,7 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
     } else if (message.state) {
 
       const data = message.state;
+      console.log(data);
 
       const winningPlayer = data?.the_winner?.name;
 
@@ -121,8 +122,9 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
         phase: data.phase,
         myId: data.key,
         stateMessage: stateMessage,
-        rollResult: data?.rollResult ?? [0,0],
+        rollResult: data.roll_result,
         activePlayerName: activePlayerName,
+        playerResources: data.resources,
         gameBoard: {
           centroids: centroids,
           scorpion: scorpion,
