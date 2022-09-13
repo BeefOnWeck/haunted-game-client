@@ -7,7 +7,7 @@ import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.j
 
 setBasePath('.');
 
-function TradeDialog({open,setOpen,socket,setError}){
+function TradeDialog({open,setOpen,key,socket}){
 
   const [have, setHave] = useState('');
   const [want, setWant] = useState('');
@@ -94,7 +94,7 @@ function TradeDialog({open,setOpen,socket,setError}){
           Rock
         </sl-button>
       </div>
-      <sl-button slot="footer" variant="primary" @click=${() => trade(socket,have,want,setHave,setWant,setOpen,setError)}>
+      <sl-button slot="footer" variant="primary" @click=${() => trade(socket,key,have,want,setHave,setWant,setOpen)}>
         Trade
       </sl-button>
       <sl-button slot="footer" variant="neutral" @click=${() => setOpen(false)}>
@@ -128,17 +128,15 @@ function toggleSetter(setter, type) {
   });
 }
 
-function trade(socket, have, want, setHave, setWant, setOpen, setError) {
-  socket.emit('player-actions', {
-    trade: {
-      pid: socket.id,
-      have: have,
-      want: want
-    }
-  }, response => {
-    setError(response.status);
-    setTimeout(msg => setError(msg), 3000, '');
-  });
+function trade(socket, key, have, want, setHave, setWant, setOpen) {
+  
+  socket.send(JSON.stringify({
+    action: 'Trade',
+    player: key,
+    target: [null,null,null,null,null],
+    trade: [have, want]
+  }));
+
   setHave('');
   setWant('');
   setOpen(false);

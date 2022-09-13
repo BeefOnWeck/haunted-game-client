@@ -80,6 +80,7 @@ function GameControls({
       <trade-dialog
         .open=${dialogOpen}
         .setOpen=${setDialogOpen}
+        .key=${key}
         .socket=${socket}
       >
       </trade-dialog>
@@ -122,48 +123,54 @@ function rollDice(socket, key) {
   socket.send(JSON.stringify({
     action: 'RollDice',
     player: key,
-    target: 'None',
-    trade: 'None'
+    target: [null,null,null,null,null],
+    trade: null
   }));
 }
 
-function build(socket, key, phase, selectedRoads, setSelectedRoads, 
-  selectedNodes, setSelectedNodes) {
+function build(socket, key, phase, selectedRoads, setSelectedRoads, selectedNodes, setSelectedNodes) {
+  
   let buildAction = phase == 'Setup' ? 'PlaceVillageAndRoad'
     : phase == 'Play' ? 'BuildStuff'
     : '';
+
   let target = [
     [...selectedRoads].map(r => (['Road',r])),
     [...selectedNodes].map(n => (['Node',n]))
   ].flat();
+
   while (target.length < 5) target.push(null);
+  target.splice(5,10);
+
   let command = {
     action: buildAction,
     player: key,
     target,
     trade: null
   };
+
   socket.send(JSON.stringify(command));
+
   setSelectedRoads(new Set());
   setSelectedNodes(new Set());
 }
 
-function buyBug(socket) {
-  socket.emit('player-actions', {
-    'buyBug': {
-      pid: socket.id
-    }
-  }, response => {
-    setErrorMessage(response.status);
-    setTimeout(msg => setErrorMessage(msg), 3000, '');
-  });
+function buyBug(socket, key) {
+  socket.send(JSON.stringify({
+    action: 'BuyBug',
+    player: key,
+    target: [null,null,null,null,null],
+    trade: null
+  }));
 }
 
-function endturn(socket) {
-  socket.emit('end-my-turn', {}, response => {
-    setErrorMessage(response.status);
-    setTimeout(msg => setErrorMessage(msg), 3000, '');
-  });
+function endturn(socket, key) {
+  socket.send(JSON.stringify({
+    action: 'EndTurn',
+    player: key,
+    target: [null,null,null,null,null],
+    trade: null
+  }));
 }
 
 customElements.define("game-controls", component(GameControls));
