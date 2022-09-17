@@ -11,7 +11,8 @@ function HexGrid({
   selectedRoads,
   setSelectedRoads,
   selectedNodes,
-  setSelectedNodes, 
+  setSelectedNodes,
+  key,
   socket}) {
 
   const {centroids, nodes, hexagons, numbers, roads, lines, villages, scorpion} = board;
@@ -47,8 +48,8 @@ function HexGrid({
       Math.round(widthY*1.1).toString();
   }
 
-  let enableBuildHighlight = myTurn && (action.includes('buildStuff') || action.includes('setupVillagesAndRoads'));
-  let enableHexagonHighlight = myTurn && action.includes('moveScorpion');
+  let enableBuildHighlight = myTurn && (action.includes('BuildStuff') || action.includes('PlaceVillageAndRoad'));
+  let enableHexagonHighlight = myTurn && action.includes('MoveScorpion');
 
   return html`
     <svg viewBox=${svgViewBox}>
@@ -62,7 +63,7 @@ function HexGrid({
             <polygon 
               points=${poly} 
               class="${resource} ${enableHexagonHighlight ? 'highlightHexagon' : ''}"
-              @click=${enableHexagonHighlight ? () => selectHexagon(idx, socket) : () => {}}
+              @click=${enableHexagonHighlight ? () => selectHexagon(idx, socket, key) : () => {}}
               >
             </polygon>
           `;
@@ -212,15 +213,20 @@ function HexGrid({
   `;
 }
 
-function selectHexagon(index, socket) {
-  socket.emit('player-actions', {
-    'moveScorpion': {
-      pid: socket.id,
-      hexInd: index
-    }
-  }, response => {
-    console.log(response.status);
-  });
+function selectHexagon(index, socket, key) {
+
+  let target = [['Hex',index]];
+
+  while (target.length < 5) target.push(null);
+
+  let command = {
+    action: 'MoveScorpion',
+    player: key,
+    target,
+    trade: null
+  };
+
+  socket.send(JSON.stringify(command));
 }
 
 function select(index, setSelected) {

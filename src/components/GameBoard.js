@@ -31,6 +31,7 @@ function GameBoard({ gameState, errorMessage, socket }) {
         .setSelectedRoads=${setSelectedRoads}
         .selectedNodes=${selectedNodes}
         .setSelectedNodes=${setSelectedNodes}
+        .key=${gameState.myId}
         .socket=${socket}
       ></hex-grid>
       <game-controls

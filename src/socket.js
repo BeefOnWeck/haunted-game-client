@@ -1,11 +1,5 @@
-// import { io } from 'socket.io-client';
 
 export default function bindToSocket(gameState, setGameState, setErrorMessage) {
-
-  // 
-  // let socket = io(process.env.APP_SERVER_ORIGIN, {
-  //   transports: ['websocket']
-  // });
 
   let socket = new WebSocket(process.env.APP_SERVER_ORIGIN);
 
@@ -13,20 +7,12 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
    * 
    */
   socket.addEventListener('open', function(event) {
-
-    // if (gameState.myName) {
-    //   socket.emit('reconnect-user-name', gameState.myName, response => {
-    //     console.log(response.status);
-    //   });
-    // }
-
-    // setGameState(prevState => ({
-    //   ...prevState,
-    //   myId: this.id,
-    //   isConnected: true
-    // }));
+    console.log('Websocket connection established.');
   });
 
+  /**
+   * 
+   */
   socket.addEventListener('message', function(event){
 
     let message = JSON.parse(event.data);
@@ -42,16 +28,44 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
       const data = message.state;
       console.log(data);
 
+      let actionMessage = 'Actions you can take:';
+
+      if (data?.allowed_actions?.includes('PlaceVillageAndRoad')) {
+        actionMessage = 'Select one village and one road and hit Build Selected';
+      }
+      if (data?.allowed_actions?.includes('RollDice')) {
+        actionMessage = 'Roll the dice.';
+      } 
+      if (data?.allowed_actions?.includes('MoveScorpion')) {
+        actionMessage = 'Move the scorpion.';
+      }
+      if (data?.allowed_actions?.includes('BuildStuff')) {
+        actionMessage += ' Build,';
+      }
+      if (data?.allowed_actions?.includes('Trade')) {
+        actionMessage += ' Trade,';
+      }
+      if (data?.allowed_actions?.includes('EndTurn')) {
+        actionMessage += ' End Turn,';
+      }
+
+      // Change any trailing commas to a period.
+      if (actionMessage?.slice(-1) == ',') {
+        actionMessage = actionMessage.slice(0,actionMessage.length-1) + '.';
+      }
+
+      const activePlayerName = data?.active_player?.name;
       const winningPlayer = data?.the_winner?.name;
+      const myTurn = data?.active_player?.key == data?.key;
 
       let stateMessage;
       if (data?.phase == 'End') {
         stateMessage = 'Game Over: Winner is ' + winningPlayer + '.';
+      } else if (myTurn) {
+        stateMessage = actionMessage;
       } else {
         stateMessage = '';
       }
-
-      const activePlayerName = data?.active_player?.name;
 
       let centroids = [];
       let scorpion = {x: null, y: null};
@@ -124,6 +138,8 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
         stateMessage: stateMessage,
         rollResult: data.roll_result,
         activePlayerName: activePlayerName,
+        myTurn,
+        possibleActions: data?.allowed_actions,
         playerResources: data.resources,
         gameBoard: {
           centroids: centroids,

@@ -21,36 +21,36 @@ function TradeDialog({open,setOpen,key,socket}){
       <div class="dialog-column">
         <div class="dialog-row">Have x3:</div>
         <sl-button 
-          variant=${have == 'block' ? 'primary' : 'default'}
-          @click=${() => toggleSetter(setHave,'block')} 
+          variant=${have == 'Block' ? 'primary' : 'default'}
+          @click=${() => toggleSetter(setHave,'Block')} 
           class="resource"
         >
           Block
         </sl-button>
         <sl-button 
-          variant=${have == 'timber' ? 'primary' : 'default'}
-          @click=${() => toggleSetter(setHave,'timber')} 
+          variant=${have == 'Timber' ? 'primary' : 'default'}
+          @click=${() => toggleSetter(setHave,'Timber')} 
           class="resource"
         >
           Timber
         </sl-button>
         <sl-button 
-          variant=${have == 'fiber' ? 'primary' : 'default'}
-          @click=${() => toggleSetter(setHave,'fiber')} 
+          variant=${have == 'Fiber' ? 'primary' : 'default'}
+          @click=${() => toggleSetter(setHave,'Fiber')} 
           class="resource"
         >
           Fiber
         </sl-button>
         <sl-button 
-          variant=${have == 'cereal' ? 'primary' : 'default'}
-          @click=${() => toggleSetter(setHave,'cereal')} 
+          variant=${have == 'Cereal' ? 'primary' : 'default'}
+          @click=${() => toggleSetter(setHave,'Cereal')} 
           class="resource"
         >
           Cereal
         </sl-button>
         <sl-button 
-          variant=${have == 'rock' ? 'primary' : 'default'}
-          @click=${() => toggleSetter(setHave,'rock')} 
+          variant=${have == 'Rock' ? 'primary' : 'default'}
+          @click=${() => toggleSetter(setHave,'Rock')} 
           class="resource"
         >
           Rock
@@ -59,36 +59,36 @@ function TradeDialog({open,setOpen,key,socket}){
       <div class="dialog-column">
         <div class="dialog-row">Want x1:</div>
         <sl-button 
-          variant=${want == 'block' ? 'primary' : 'default'}
-          @click=${() => toggleSetter(setWant,'block')} 
+          variant=${want == 'Block' ? 'primary' : 'default'}
+          @click=${() => toggleSetter(setWant,'Block')} 
           class="resource"
         >
           Block
         </sl-button>
         <sl-button 
-          variant=${want == 'timber' ? 'primary' : 'default'}
-          @click=${() => toggleSetter(setWant,'timber')} 
+          variant=${want == 'Timber' ? 'primary' : 'default'}
+          @click=${() => toggleSetter(setWant,'Timber')} 
           class="resource"
         >
           Timber
         </sl-button>
         <sl-button 
-          variant=${want == 'fiber' ? 'primary' : 'default'}
-          @click=${() => toggleSetter(setWant,'fiber')} 
+          variant=${want == 'Fiber' ? 'primary' : 'default'}
+          @click=${() => toggleSetter(setWant,'Fiber')} 
           class="resource"
         >
           Fiber
         </sl-button>
         <sl-button 
-          variant=${want == 'cereal' ? 'primary' : 'default'}
-          @click=${() => toggleSetter(setWant,'cereal')} 
+          variant=${want == 'Cereal' ? 'primary' : 'default'}
+          @click=${() => toggleSetter(setWant,'Cereal')} 
           class="resource"
         >
           Cereal
         </sl-button>
         <sl-button 
-          variant=${want == 'rock' ? 'primary' : 'default'}
-          @click=${() => toggleSetter(setWant,'rock')} 
+          variant=${want == 'Rock' ? 'primary' : 'default'}
+          @click=${() => toggleSetter(setWant,'Rock')} 
           class="resource"
         >
           Rock
