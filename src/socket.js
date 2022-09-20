@@ -62,6 +62,8 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
       let stateMessage;
       if (data?.phase == 'End') {
         stateMessage = 'Game Over: Winner is ' + winningPlayer + '.';
+      } else if (data?.phase == 'Boot') {
+        stateMessage = 'Waiting for game to start...';
       } else if (myTurn) {
         stateMessage = actionMessage;
       } else {
@@ -69,7 +71,7 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
       }
 
       let centroids = [];
-      let scorpion = {x: null, y: null};
+      let scorpion = {x: -1000, y: -1000};
 
       data.board.centroids.forEach((cent,idx) => {
         centroids.splice(idx,1,cent);

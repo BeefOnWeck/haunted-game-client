@@ -83,7 +83,7 @@ function HexGrid({
             <path d=${line} class="outlines"/>
           `;
         })}
-        <!-- scorpion -->
+        <!-- Scorpion -->
         ${svg`
         <g class=${moving ? 'movingAnimation' : ''}>
           <path 
