@@ -5,11 +5,13 @@ import './components/GameLogin.js';
 import './components/GameBoard.js';
 
 let socket = null;
+let timer = null;
 
 function App() {
 
   const [gameState, setGameState] = useState({
-    isConnected: false,
+    timer: null,
+    isConnected: false, // TODO: This is not used; consider removing
     myId: null,
     myName: null,
     hasJoined: false,
@@ -49,7 +51,6 @@ function App() {
     html`
       <game-login
         .socket=${socket}
-        @joined=${event => joinedListener(event, gameState, setGameState)}
       ></game-login>
     ` : 
     html`
@@ -60,18 +61,6 @@ function App() {
       ></game-board>
     `;
 
-}
-
-// TODO: Move this to another file (listeners.js?)
-function joinedListener(ev, gameState, setGameState) {
-  if (ev.detail.status == 'You have been added.' || ev.detail.status == 'You have been reconnected.') {
-    setGameState(prevState => ({
-      ...prevState,
-      myName: ev.detail.name,
-      hasJoined: true
-    }));
-    window.localStorage.setItem('sgc-name', ev.detail.name);
-  }
 }
 
 customElements.define("my-app", component(App));

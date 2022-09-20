@@ -6,38 +6,16 @@ function GameLogin({ socket }) {
     ev.preventDefault();
 
     const username = ev.target.username.value;
-    const thisComponent = this;
 
-    sock.send(username);
+    sock.send(JSON.stringify({
+      name: username,
+      key: window.localStorage.getItem('rgs-user-key') ?? null
+    }));
 
-    // sock.emit('reconnect-user-name', username, response1 => {
-    //   if (response1.status == 'Cannot reconnect; no matching user.') {
-    //     sock.emit('send-user-name', username, response2 => {
-    //       const custEvnt = new CustomEvent('joined', {
-    //         bubbles: true,
-    //         composed: true,
-    //         detail: {  
-    //           name: username,
-    //           status: response2.status
-    //         }
-    //       });
-    //       thisComponent.dispatchEvent(custEvnt);
-    //     });
-    //   } else {
-    //     const custEvnt = new CustomEvent('joined', {
-    //       bubbles: true,
-    //       composed: true,
-    //       detail: {  
-    //         name: username,
-    //         status: response1.status
-    //       }
-    //     });
-    //     thisComponent.dispatchEvent(custEvnt);
-    //   }
-    // });
+    window.localStorage.setItem('rgs-user-name', username);
   };
 
-  const storedName = window.localStorage.getItem('sgc-name') ?? null;
+  const storedName = window.localStorage.getItem('rgs-user-name') ?? null;
 
   return html`
     <div>
