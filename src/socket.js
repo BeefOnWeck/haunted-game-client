@@ -157,6 +157,7 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
           myTurn,
           possibleActions: data?.allowed_actions,
           playerResources: data.resources,
+          yourBugs: data.bugs,
           gameBoard: {
             centroids: centroids,
             scorpion: scorpion,
