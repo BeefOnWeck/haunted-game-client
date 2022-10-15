@@ -130,6 +130,8 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
         });
       });
 
+      // TODO: Most bugs owner's name
+      const mostBugsColor = data.has_most_bugs ? data.colors[data.has_most_bugs] : 'lightgray';
 
       setGameState(prevState => {
 
@@ -158,6 +160,7 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
           possibleActions: data?.allowed_actions,
           playerResources: data.resources,
           yourBugs: data.bugs,
+          mostBugsColor,
           gameBoard: {
             centroids: centroids,
             scorpion: scorpion,
