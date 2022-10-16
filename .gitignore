@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-
+fly.toml
 
 # local env files
 .env
