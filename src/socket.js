@@ -133,6 +133,11 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
       // TODO: Most bugs owner's name
       const mostBugsColor = data.has_most_bugs ? data.colors[data.has_most_bugs] : 'lightgray';
 
+      // TODO: Longest road owner's name
+      const longestRoadColor = data.has_longest_road ? data.colors[data.has_longest_road] : 'lightgray';
+
+      console.log(data.has_longest_road);
+
       setGameState(prevState => {
 
         clearTimeout(prevState.timer);
@@ -161,6 +166,7 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
           playerResources: data.resources,
           yourBugs: data.bugs,
           mostBugsColor,
+          longestRoadColor,
           gameBoard: {
             centroids: centroids,
             scorpion: scorpion,
