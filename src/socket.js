@@ -56,8 +56,9 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
       }
 
       const activePlayerName = data?.active_player?.name;
-      const winningPlayer = data?.the_winner?.name;
+      const winningPlayer = data?.the_winner_name;
       const myTurn = data?.active_player?.key == data?.key;
+      const myName = data?.my_name;
 
       let stateMessage;
       if (data?.phase == 'End') {
@@ -162,6 +163,7 @@ export default function bindToSocket(gameState, setGameState, setErrorMessage) {
           rollResult: data.roll_result,
           activePlayerName: activePlayerName,
           myTurn,
+          myName,
           possibleActions: data?.allowed_actions,
           playerResources: data.resources,
           yourBugs: data.bugs,
